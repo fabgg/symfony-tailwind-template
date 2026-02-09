@@ -1,0 +1,64 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Demo — {{ item.name }}{% endblock %}
+{% block page_title %}{{ item.name }}{% endblock %}
+{% block page_actions %}
+    <twig:Button variant="secondary" size="sm" href="{{ path('app_demo_edit', {id: item.id}) }}">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        Edit
+    </twig:Button>
+    <twig:Button variant="danger" size="sm" data-modal-trigger="confirm-delete">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        Delete
+    </twig:Button>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl">
+    <twig:Card>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Name</dt>
+                <dd class="mt-1 text-text-primary">{{ item.name }}</dd>
+            </div>
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Category</dt>
+                <dd class="mt-1 text-text-primary">{{ item.category }}</dd>
+            </div>
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Status</dt>
+                <dd class="mt-1"><twig:Badge variant="{{ item.status }}">{{ item.statusLabel }}</twig:Badge></dd>
+            </div>
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Priority</dt>
+                <dd class="mt-1 text-text-primary">{{ item.priority }}</dd>
+            </div>
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Date</dt>
+                <dd class="mt-1 text-text-primary">{{ item.date }}</dd>
+            </div>
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Color</dt>
+                <dd class="mt-1 flex items-center gap-2">
+                    <span class="inline-block w-5 h-5 rounded border border-border" style="background-color: {{ item.color }}"></span>
+                    <span class="text-text-primary">{{ item.color }}</span>
+                </dd>
+            </div>
+        </dl>
+    </twig:Card>
+
+    <div class="mt-4">
+        <twig:Button variant="secondary" href="{{ path('app_demo_index') }}">&larr; Back to list</twig:Button>
+    </div>
+</div>
+
+<twig:Modal id="confirm-delete" title="Confirm deletion">
+    <twig:Modal:Body>
+        <p class="text-text-secondary">Are you sure you want to delete <strong>{{ item.name }}</strong>? This action cannot be undone.</p>
+    </twig:Modal:Body>
+    <twig:Modal:Footer>
+        <twig:Button variant="secondary" data-action="modal#close">Cancel</twig:Button>
+        <twig:Button variant="danger">Delete</twig:Button>
+    </twig:Modal:Footer>
+</twig:Modal>
+{% endblock %}

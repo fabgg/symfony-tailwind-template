@@ -1,0 +1,50 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Demo — Edit {{ item.name }}{% endblock %}
+{% block page_title %}Edit {{ item.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl">
+    <twig:Card>
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                <div>{{ form_row(form.name) }}</div>
+                <div>{{ form_row(form.email) }}</div>
+            </div>
+
+            {{ form_row(form.password) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.richDescription) }}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                <div>{{ form_row(form.category) }}</div>
+                <div>{{ form_row(form.enhancedCategory) }}</div>
+            </div>
+
+            {{ form_row(form.tags) }}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                <div>{{ form_row(form.publishedAt) }}</div>
+                <div>{{ form_row(form.quantity) }}</div>
+            </div>
+
+            {{ form_row(form.validityPeriod) }}
+            {{ form_row(form.color) }}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                <div>{{ form_row(form.active) }}</div>
+                <div>{{ form_row(form.priority) }}</div>
+            </div>
+
+            {{ form_row(form.image) }}
+
+            <div class="flex justify-end gap-2 mt-6 pt-6 border-t border-border">
+                <twig:Button variant="secondary" href="{{ path('app_demo_show', {id: item.id}) }}">Cancel</twig:Button>
+                <twig:Button type="submit" variant="primary">Save</twig:Button>
+            </div>
+        {{ form_end(form) }}
+    </twig:Card>
+</div>
+{% endblock %}

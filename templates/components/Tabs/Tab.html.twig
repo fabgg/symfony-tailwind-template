@@ -1,0 +1,14 @@
+{% props id, label, icon = null %}
+
+<button type="button"
+        role="tab"
+        data-tabs-target="tab"
+        data-action="tabs#select"
+        data-tab-id="{{ id }}"
+        aria-controls="panel-{{ id }}"
+        class="px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary border-b-2 border-transparent transition-colors whitespace-nowrap -mb-px data-[active]:border-primary-600 data-[active]:text-primary-600">
+    {% if icon %}
+        <span class="mr-1.5">{{ icon|raw }}</span>
+    {% endif %}
+    {{ label }}
+</button>

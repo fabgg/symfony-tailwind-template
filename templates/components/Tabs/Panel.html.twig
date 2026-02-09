@@ -1,0 +1,9 @@
+{% props id %}
+
+<div role="tabpanel"
+     id="panel-{{ id }}"
+     data-tabs-target="panel"
+     data-tab-id="{{ id }}"
+     class="hidden">
+    {% block content %}{% endblock %}
+</div>

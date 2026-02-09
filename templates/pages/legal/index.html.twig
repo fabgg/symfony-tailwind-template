@@ -1,0 +1,44 @@
+{% extends app.user ? 'layouts/app.html.twig' : 'layouts/auth.html.twig' %}
+
+{% block title %}Legal Notice{% endblock %}
+
+{% block page_title %}Legal Notice{% endblock %}
+
+{% block content %}
+<div class="{{ app.user ? 'max-w-3xl' : 'bg-surface rounded-lg shadow-sm border border-border p-8' }}">
+    {% if not app.user %}
+        <h1 class="text-2xl font-bold text-text-primary mb-6">Legal Notice</h1>
+    {% endif %}
+
+    <div class="space-y-6 text-text-secondary text-sm">
+        <section>
+            <h2 class="text-lg font-semibold text-text-primary mb-2">Site Publisher</h2>
+            <p>This site is published by [Company Name], [legal form] with a share capital of [amount].</p>
+            <p>Registered office: [Address]</p>
+            <p>Registration number: [City] [Number]</p>
+            <p>Publication director: [Name]</p>
+        </section>
+
+        <section>
+            <h2 class="text-lg font-semibold text-text-primary mb-2">Hosting</h2>
+            <p>This site is hosted by [Hosting Provider Name], [Hosting Provider Address].</p>
+        </section>
+
+        <section>
+            <h2 class="text-lg font-semibold text-text-primary mb-2">Intellectual Property</h2>
+            <p>All content on this site (text, images, videos, etc.) is protected by copyright. Any reproduction, even partial, is prohibited without prior authorization.</p>
+        </section>
+
+        <section>
+            <h2 class="text-lg font-semibold text-text-primary mb-2">Personal Data</h2>
+            <p>The information collected on this site is processed in accordance with the General Data Protection Regulation (GDPR). You have the right to access, modify, and delete your personal data.</p>
+            <p>To exercise this right, contact us at: [contact email].</p>
+        </section>
+
+        <section>
+            <h2 class="text-lg font-semibold text-text-primary mb-2">Cookies</h2>
+            <p>This site uses technical cookies necessary for its operation. No advertising or tracking cookies are used.</p>
+        </section>
+    </div>
+</div>
+{% endblock %}

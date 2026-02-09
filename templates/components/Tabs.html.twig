@@ -1,0 +1,10 @@
+{% props orientation = 'horizontal', defaultTab = null %}
+
+<div {{ attributes.defaults({
+    class: orientation == 'vertical' ? 'flex flex-col md:flex-row gap-4' : '',
+    'data-controller': 'tabs',
+    'data-tabs-active-tab-value': defaultTab ?? '',
+    'data-tabs-orientation-value': orientation,
+}) }}>
+    {% block content %}{% endblock %}
+</div>

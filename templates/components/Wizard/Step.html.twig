@@ -1,0 +1,14 @@
+{% props number, label %}
+
+<div data-wizard-target="step" data-step="{{ number }}" class="flex items-center">
+    {% if number > 1 %}
+        <div class="w-12 h-0.5 bg-border mx-2" data-wizard-target="connector"></div>
+    {% endif %}
+    <div class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium border-2 border-border text-text-muted transition-colors"
+              data-wizard-target="indicator">
+            {{ number }}
+        </span>
+        <span class="text-sm font-medium text-text-muted hidden sm:inline" data-wizard-target="label">{{ label }}</span>
+    </div>
+</div>

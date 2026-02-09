@@ -1,0 +1,36 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Home{% endblock %}
+{% block page_title %}Home{% endblock %}
+
+{% block content %}
+<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <twig:Card title="Welcome">
+        <p class="text-text-secondary">Welcome to the Symfony 7.4 skeleton with Tailwind CSS. This project provides a complete starting point for your web applications.</p>
+    </twig:Card>
+
+    <twig:Card title="UI Components">
+        <p class="text-text-secondary mb-3">Reusable Twig components: buttons, cards, modals, tables, tabs, wizard, accordion, and more.</p>
+        <twig:Button variant="secondary" size="sm" href="{{ path('app_styleguide_components') }}">View components</twig:Button>
+    </twig:Card>
+
+    <twig:Card title="Forms">
+        <p class="text-text-secondary mb-3">A complete Tailwind form theme with enhanced fields: datepicker, tags, WYSIWYG, advanced select, dropzone.</p>
+        <twig:Button variant="secondary" size="sm" href="{{ path('app_styleguide_forms') }}">View forms</twig:Button>
+    </twig:Card>
+
+    <twig:Card title="Dark Mode">
+        <p class="text-text-secondary">Toggle between light, dark, and auto mode using the button in the topbar. All colors adapt thanks to semantic tokens.</p>
+    </twig:Card>
+
+    <twig:Card title="Typography">
+        <p class="text-text-secondary mb-3">A complete typography guide with all available sizes, weights, and styles.</p>
+        <twig:Button variant="secondary" size="sm" href="{{ path('app_styleguide_typography') }}">View typography</twig:Button>
+    </twig:Card>
+
+    <twig:Card title="Demo CRUD">
+        <p class="text-text-secondary mb-3">A complete CRUD example demonstrating the use of all components and field types.</p>
+        <twig:Button variant="secondary" size="sm" href="{{ path('app_demo_index') }}">View demo</twig:Button>
+    </twig:Card>
+</div>
+{% endblock %}

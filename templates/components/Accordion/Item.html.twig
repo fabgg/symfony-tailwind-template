@@ -1,0 +1,18 @@
+{% props id, title, disabled = false %}
+
+<div data-accordion-target="item" data-item-id="{{ id }}">
+    <button type="button"
+            data-action="accordion#toggle"
+            data-accordion-target="trigger"
+            data-item-id="{{ id }}"
+            class="flex items-center justify-between w-full px-4 py-3 text-left text-sm font-medium text-text-primary hover:bg-surface-hover transition-colors {{ disabled ? 'opacity-50 cursor-not-allowed' : '' }}"
+            {{ disabled ? 'disabled' : '' }}>
+        <span>{{ title }}</span>
+        <svg class="w-4 h-4 text-text-muted transition-transform duration-200 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+    </button>
+    <div data-accordion-target="content" class="overflow-hidden transition-all duration-200 max-h-0">
+        <div class="px-4 py-3 text-sm text-text-secondary">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+{% extends 'layouts/auth.html.twig' %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block content %}
+<div class="bg-surface rounded-lg shadow-sm border border-border p-8">
+    <h2 class="text-2xl font-bold text-text-primary text-center mb-6">Sign in</h2>
+
+    {% if error %}
+        <div class="mb-4">
+            <twig:Alert type="error">{{ error.messageKey|trans(error.messageData, 'security') }}</twig:Alert>
+        </div>
+    {% endif %}
+
+    <form method="post">
+        <div class="mb-4">
+            <label for="input-email" class="block text-sm font-medium text-text-primary mb-1">Email</label>
+            <input type="email" id="input-email" name="_username" value="{{ last_username }}" required autofocus
+                   class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors">
+        </div>
+
+        <div class="mb-4" data-controller="password-visibility">
+            <label for="input-password" class="block text-sm font-medium text-text-primary mb-1">Password</label>
+            <div class="relative">
+                <input type="password" id="input-password" name="_password" required
+                       data-password-visibility-target="input"
+                       class="block w-full rounded-lg border border-border bg-surface px-3 py-2 pr-10 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors">
+                <button type="button" data-action="password-visibility#toggle"
+                        class="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors">
+                    <span data-password-visibility-target="icon">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-6">
+            <label class="flex items-center gap-2 text-sm text-text-secondary">
+                <input type="checkbox" name="_remember_me" class="rounded border-border text-primary-600 focus:ring-primary-500">
+                Remember me
+            </label>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <twig:Button type="submit" variant="primary" class="w-full">Sign in</twig:Button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-text-secondary">
+        Don't have an account?
+        <a href="{{ path('app_register') }}" class="text-primary-600 hover:text-primary-700 font-medium">Create account</a>
+    </p>
+</div>
+{% endblock %}

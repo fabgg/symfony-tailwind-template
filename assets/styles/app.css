@@ -1,3 +1,157 @@
-body {
-    background-color: skyblue;
+@import "./theme.css";
+@import "tailwindcss";
+
+/* Flatpickr overrides */
+.flatpickr-calendar {
+    border-color: var(--color-border) !important;
+    background: var(--color-surface) !important;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
+}
+.flatpickr-day.selected {
+    background: var(--color-primary-600) !important;
+    border-color: var(--color-primary-600) !important;
+}
+.flatpickr-day:hover {
+    background: var(--color-surface-hover) !important;
+}
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+span.flatpickr-weekday {
+    color: var(--color-text-primary) !important;
+    background: var(--color-surface) !important;
+}
+.flatpickr-day {
+    color: var(--color-text-primary) !important;
+}
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+    color: white !important;
+}
+
+/* Tom Select overrides */
+.ts-wrapper .ts-control {
+    border-color: var(--color-border) !important;
+    background: var(--color-surface) !important;
+    color: var(--color-text-primary) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.875rem !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.375rem !important;
+}
+.ts-wrapper.focus .ts-control {
+    border-color: var(--color-border-focus) !important;
+    box-shadow: 0 0 0 2px rgb(59 130 246 / 0.2) !important;
+}
+.ts-dropdown {
+    border-color: var(--color-border) !important;
+    background: var(--color-surface) !important;
+    color: var(--color-text-primary) !important;
+    border-radius: 0.5rem !important;
+}
+.ts-dropdown .active {
+    background: var(--color-surface-hover) !important;
+    color: var(--color-text-primary) !important;
+}
+.ts-wrapper .ts-control .item {
+    display: inline-flex !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: max-content !important;
+    background: var(--color-primary-100) !important;
+    color: var(--color-primary-800) !important;
+    border-radius: 9999px !important;
+    padding: 0.125rem 0.625rem !important;
+    margin: 0 !important;
+    font-size: 0.75rem !important;
+    line-height: 1.5 !important;
+    white-space: nowrap !important;
+}
+.ts-wrapper .ts-control .item .remove {
+    margin-left: 0.375rem !important;
+    border-left: none !important;
+    padding: 0 0.25rem 0 0.125rem !important;
+}
+.ts-wrapper .ts-control > input {
+    flex: 1 1 2rem !important;
+    min-width: 2rem !important;
+    margin: 0 !important;
+}
+
+/* Table variants */
+.table-striped tbody tr:nth-child(even) {
+    background-color: var(--color-surface-alt);
+}
+.table-hoverable tbody tr:hover {
+    background-color: var(--color-surface-hover);
+}
+
+/* Button Group */
+.btn-group > a,
+.btn-group > button {
+    border-radius: 0 !important;
+}
+.btn-group > a:first-child,
+.btn-group > button:first-child {
+    border-radius: 0.5rem 0 0 0.5rem !important;
+}
+.btn-group > a:last-child,
+.btn-group > button:last-child {
+    border-radius: 0 0.5rem 0.5rem 0 !important;
+}
+.btn-group > a + a,
+.btn-group > button + button,
+.btn-group > a + button,
+.btn-group > button + a {
+    margin-left: -1px;
+}
+.btn-group > a:focus,
+.btn-group > button:focus {
+    z-index: 1;
+    position: relative;
+}
+
+/* Trix overrides */
+trix-toolbar {
+    background: var(--color-surface-alt) !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    border-radius: 0.5rem 0.5rem 0 0 !important;
+    padding: 0.25rem !important;
+}
+trix-toolbar .trix-button {
+    color: var(--color-text-secondary) !important;
+    border: none !important;
+    border-radius: 0.25rem !important;
+}
+trix-toolbar .trix-button:hover {
+    background: var(--color-surface-hover) !important;
+}
+trix-toolbar .trix-button.trix-active {
+    background: var(--color-primary-100) !important;
+    color: var(--color-primary-700) !important;
+}
+.dark trix-toolbar {
+    background: #1e293b !important;
+}
+.dark trix-toolbar .trix-button {
+    filter: invert(1) !important;
+}
+.dark trix-toolbar .trix-button:hover {
+    filter: invert(1) !important;
+    background: var(--color-surface-hover) !important;
+}
+.dark trix-toolbar .trix-button.trix-active {
+    filter: invert(1) !important;
+    background: var(--color-primary-900) !important;
+}
+trix-toolbar .trix-button-group {
+    border: none !important;
+    margin: 0 0.25rem !important;
+}
+trix-toolbar .trix-button-group--file-tools {
+    display: none !important;
+}
+trix-editor {
+    border-radius: 0 0 0.5rem 0.5rem !important;
 }

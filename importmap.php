@@ -25,4 +25,31 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'flatpickr' => [
+        'version' => '4.6.13',
+    ],
+    'flatpickr/dist/flatpickr.min.css' => [
+        'version' => '4.6.13',
+        'type' => 'css',
+    ],
+    'tom-select' => [
+        'version' => '2.4.6',
+    ],
+    '@orchidjs/sifter' => [
+        'version' => '1.1.0',
+    ],
+    '@orchidjs/unicode-variants' => [
+        'version' => '1.1.2',
+    ],
+    'tom-select/dist/css/tom-select.default.min.css' => [
+        'version' => '2.4.6',
+        'type' => 'css',
+    ],
+    'trix' => [
+        'version' => '2.1.16',
+    ],
+    'trix/dist/trix.min.css' => [
+        'version' => '2.1.16',
+        'type' => 'css',
+    ],
 ];

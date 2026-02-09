@@ -1,0 +1,11 @@
+{% props striped = false, hoverable = true, xs = false %}
+
+{% set tableClasses = 'min-w-full divide-y divide-border ' ~ (xs ? 'text-xs' : 'text-sm') %}
+{% if striped %}{% set tableClasses = tableClasses ~ ' table-striped' %}{% endif %}
+{% if hoverable %}{% set tableClasses = tableClasses ~ ' table-hoverable' %}{% endif %}
+
+<div class="overflow-x-auto border border-border rounded-lg">
+    <table {{ attributes.defaults({ class: tableClasses }) }}>
+        {% block content %}{% endblock %}
+    </table>
+</div>

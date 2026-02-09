@@ -1,0 +1,13 @@
+{% props variant = 'default' %}
+
+{% set variants = {
+    default: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
+    success: 'bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200',
+    warning: 'bg-warning-100 text-warning-800 dark:bg-warning-900 dark:text-warning-200',
+    danger: 'bg-danger-100 text-danger-800 dark:bg-danger-900 dark:text-danger-200',
+    info: 'bg-info-100 text-info-800 dark:bg-info-900 dark:text-info-200',
+} %}
+
+<span {{ attributes.defaults({
+    class: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ' ~ (variants[variant] ?? variants.default),
+}) }}>{% block content %}{% endblock %}</span>

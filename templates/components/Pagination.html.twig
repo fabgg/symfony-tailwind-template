@@ -1,0 +1,35 @@
+{% props currentPage, totalPages, route, routeParams = {} %}
+
+{% if totalPages > 1 %}
+<nav class="flex items-center justify-center gap-1 mt-6">
+    {# Previous #}
+    {% if currentPage > 1 %}
+        <a href="{{ path(route, routeParams|merge({page: currentPage - 1})) }}"
+           class="px-3 py-2 text-sm rounded-lg border border-border hover:bg-surface-hover transition-colors text-text-secondary">
+            &laquo; Prev.
+        </a>
+    {% endif %}
+
+    {# Pages #}
+    {% for page in 1..totalPages %}
+        {% if page == currentPage %}
+            <span class="px-3 py-2 text-sm rounded-lg bg-primary-600 text-white font-medium">{{ page }}</span>
+        {% elseif (page - currentPage)|abs <= 2 or page == 1 or page == totalPages %}
+            <a href="{{ path(route, routeParams|merge({page: page})) }}"
+               class="px-3 py-2 text-sm rounded-lg border border-border hover:bg-surface-hover transition-colors text-text-secondary">
+                {{ page }}
+            </a>
+        {% elseif (page - currentPage)|abs == 3 %}
+            <span class="px-2 py-2 text-text-muted">&hellip;</span>
+        {% endif %}
+    {% endfor %}
+
+    {# Next #}
+    {% if currentPage < totalPages %}
+        <a href="{{ path(route, routeParams|merge({page: currentPage + 1})) }}"
+           class="px-3 py-2 text-sm rounded-lg border border-border hover:bg-surface-hover transition-colors text-text-secondary">
+            Next &raquo;
+        </a>
+    {% endif %}
+</nav>
+{% endif %}

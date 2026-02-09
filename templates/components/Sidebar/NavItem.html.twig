@@ -1,0 +1,12 @@
+{% props route, icon = null, label %}
+
+{% set is_active = app.request.attributes.get('_route') starts with route %}
+
+<a href="{{ path(route) }}"
+   {{ is_active ? 'data-active-item' : '' }}
+   class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ is_active ? 'bg-sidebar-active text-white' : 'text-gray-300 hover:bg-sidebar-hover hover:text-white' }}">
+    {% if icon %}
+        <span class="w-5 h-5 shrink-0 flex items-center justify-center">{{ icon|raw }}</span>
+    {% endif %}
+    <span data-sidebar-label class="whitespace-nowrap overflow-hidden">{{ label }}</span>
+</a>

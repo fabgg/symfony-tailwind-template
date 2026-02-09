@@ -18,3 +18,12 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> project ###
+composer.lock
+symfony.lock
+.DS_Store
+.idea
+docs
+.claude
+###< project ###

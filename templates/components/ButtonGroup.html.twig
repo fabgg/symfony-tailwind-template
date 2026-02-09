@@ -1,0 +1,17 @@
+{% props size = 'md' %}
+
+{% set sizes = {
+    xs: 'text-xs',
+    sm: 'text-sm',
+    md: 'text-sm',
+    lg: 'text-base',
+} %}
+
+{% set _content %}{% block content %}{% endblock %}{% endset %}
+
+<div {{ attributes.defaults({
+    class: 'btn-group inline-flex ' ~ (sizes[size] ?? sizes.md),
+    role: 'group',
+}) }}>
+    {{ _content|raw }}
+</div>

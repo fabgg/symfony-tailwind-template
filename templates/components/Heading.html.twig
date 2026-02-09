@@ -1,0 +1,15 @@
+{% props level = 1 %}
+
+{% set styles = {
+    1: 'text-3xl font-bold',
+    2: 'text-2xl font-bold',
+    3: 'text-xl font-semibold',
+    4: 'text-lg font-semibold',
+    5: 'text-base font-semibold',
+    6: 'text-sm font-semibold',
+} %}
+
+{% set tag = 'h' ~ level %}
+{% set style = styles[level] ?? styles[1] %}
+
+<{{ tag }} {{ attributes.defaults({class: style ~ ' text-text-primary'}) }}>{% block content %}{% endblock %}</{{ tag }}>

@@ -1,0 +1,6 @@
+{% props href = '#' %}
+
+<a {{ attributes.defaults({
+    href: href,
+    class: 'text-primary-600 hover:text-primary-700 underline transition-colors',
+}) }}>{% block content %}{% endblock %}</a>

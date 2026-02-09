@@ -1,0 +1,313 @@
+{% use "form_div_layout.html.twig" %}
+
+{# ===== ROW ===== #}
+{% block form_row %}
+    <div class="mb-4">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_help(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+{# ===== LABEL ===== #}
+{% block form_label %}
+    {% if label is not same as(false) %}
+        <label{% if id is defined %} for="{{ id }}"{% endif %}
+            class="block text-sm font-medium mb-1 {{ errors|length > 0 ? 'text-danger-600' : 'text-text-primary' }}">
+            {{ label|default(name|humanize)|trans({}, translation_domain) }}
+            {% if required %}<span class="text-danger-500">*</span>{% endif %}
+        </label>
+    {% endif %}
+{% endblock %}
+
+{# ===== ERRORS ===== #}
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        {% for error in errors %}
+            <p class="text-sm text-danger-600 mt-1 flex items-center gap-1">
+                <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                {{ error.message }}
+            </p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{# ===== HELP ===== #}
+{% block form_help %}
+    {% if help is defined and help is not null %}
+        <p class="text-sm text-text-muted mt-1">{{ help|trans({}, translation_domain) }}</p>
+    {% endif %}
+{% endblock %}
+
+{# ===== BASE INPUT ===== #}
+{% block form_widget_simple %}
+    {% set _input_classes = 'block w-full rounded-lg border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors disabled:bg-surface-alt disabled:cursor-not-allowed' %}
+    {% set _input_error = 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/20' %}
+    {% set _input_normal = 'border-border' %}
+    {% set attr = attr|merge({
+        class: _input_classes ~ ' ' ~ (errors|length > 0 ? _input_error : _input_normal) ~ ' ' ~ (attr.class ?? '')
+    }) %}
+    {{ parent() }}
+{% endblock %}
+
+{# ===== TEXT ===== #}
+{% block text_widget %}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{# ===== EMAIL ===== #}
+{% block email_widget %}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{# ===== PASSWORD ===== #}
+{% block password_widget %}
+    {% set _input_classes = 'block w-full rounded-lg border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors disabled:bg-surface-alt disabled:cursor-not-allowed' %}
+    {% set _input_error = 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/20' %}
+    {% set _input_normal = 'border-border' %}
+    <div data-controller="password-visibility" class="relative">
+        {% set attr = attr|merge({
+            'data-password-visibility-target': 'input',
+            class: _input_classes ~ ' pr-10 ' ~ (errors|length > 0 ? _input_error : _input_normal) ~ ' ' ~ (attr.class ?? '')
+        }) %}
+        {{ parent() }}
+        <button type="button" data-action="password-visibility#toggle"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors">
+            <span data-password-visibility-target="icon">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </span>
+        </button>
+    </div>
+{% endblock %}
+
+{# ===== NUMBER ===== #}
+{% block number_widget %}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{# ===== INTEGER ===== #}
+{% block integer_widget %}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{# ===== URL ===== #}
+{% block url_widget %}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{# ===== SEARCH ===== #}
+{% block search_widget %}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{# ===== TEXTAREA ===== #}
+{% block textarea_widget %}
+    {% set _input_classes = 'block w-full rounded-lg border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors disabled:bg-surface-alt disabled:cursor-not-allowed' %}
+    {% set _input_error = 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/20' %}
+    {% set _input_normal = 'border-border' %}
+    {% set attr = attr|merge({
+        class: _input_classes ~ ' min-h-[100px] ' ~ (errors|length > 0 ? _input_error : _input_normal) ~ ' ' ~ (attr.class ?? ''),
+        rows: attr.rows ?? 4,
+    }) %}
+    {{ parent() }}
+{% endblock %}
+
+{# ===== SELECT ===== #}
+{% block choice_widget_collapsed %}
+    {% set _input_classes = 'block w-full rounded-lg border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors disabled:bg-surface-alt disabled:cursor-not-allowed' %}
+    {% set _input_error = 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/20' %}
+    {% set _input_normal = 'border-border' %}
+    {% set attr = attr|merge({
+        class: _input_classes ~ ' appearance-none bg-no-repeat bg-right pr-8 ' ~ (errors|length > 0 ? _input_error : _input_normal) ~ ' ' ~ (attr.class ?? ''),
+        style: "background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E\"); background-position: right 0.5rem center; background-size: 1rem;"
+    }) %}
+    {{ parent() }}
+{% endblock %}
+
+{# ===== CHECKBOXES / RADIOS (expanded) ===== #}
+{% block choice_widget_expanded %}
+    <div class="space-y-2">
+        {% for child in form %}
+            {{ form_widget(child) }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{# ===== CHECKBOX ===== #}
+{% block checkbox_widget %}
+    <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+        <input type="checkbox" {{ block('widget_attributes') }}
+            {% if value is defined %} value="{{ value }}"{% endif %}
+            {% if checked %} checked{% endif %}
+            class="rounded border-border text-primary-600 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed">
+        {{ label|default(name|humanize)|trans({}, translation_domain) }}
+    </label>
+{% endblock %}
+
+{# ===== RADIO ===== #}
+{% block radio_widget %}
+    <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+        <input type="radio" {{ block('widget_attributes') }}
+            {% if value is defined %} value="{{ value }}"{% endif %}
+            {% if checked %} checked{% endif %}
+            class="border-border text-primary-600 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed">
+        {{ label|default(name|humanize)|trans({}, translation_domain) }}
+    </label>
+{% endblock %}
+
+{# ===== FILE ===== #}
+{% block file_widget %}
+    {% set attr = attr|merge({
+        class: 'block w-full text-sm text-text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 dark:file:bg-primary-900 dark:file:text-primary-200 cursor-pointer ' ~ (attr.class ?? '')
+    }) %}
+    {{ parent() }}
+{% endblock %}
+
+{# ===== DATE ===== #}
+{% block date_widget %}
+    {% if widget == 'single_text' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# ===== TIME ===== #}
+{% block time_widget %}
+    {% if widget == 'single_text' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# ===== DATETIME ===== #}
+{% block datetime_widget %}
+    {% if widget == 'single_text' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# ===== BUTTON ===== #}
+{% block button_widget %}
+    {% set attr = attr|merge({
+        class: 'inline-flex items-center justify-center gap-2 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-2 text-sm rounded-lg bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed ' ~ (attr.class ?? '')
+    }) %}
+    {{ parent() }}
+{% endblock %}
+
+{# ===== CUSTOM FORM TYPES ===== #}
+
+{# Color Picker #}
+{% block color_picker_widget %}
+    {% set _input_classes = 'block w-full rounded-lg border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors disabled:bg-surface-alt disabled:cursor-not-allowed' %}
+    {% set _input_error = 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/20' %}
+    {% set _input_normal = 'border-border' %}
+    <div data-controller="colorpicker" class="flex items-center gap-2">
+        <span data-colorpicker-target="preview" class="w-8 h-8 rounded border border-border shrink-0" style="background-color: {{ value ?? '#000000' }}"></span>
+        <input type="text" {{ block('widget_attributes') }}
+            value="{{ value }}"
+            data-colorpicker-target="text"
+            data-action="input->colorpicker#syncFromText"
+            class="{{ _input_classes }} {{ errors|length > 0 ? _input_error : _input_normal }} flex-1">
+        <input type="color" value="{{ value ?? '#000000' }}"
+            data-colorpicker-target="color"
+            data-action="input->colorpicker#syncFromColor"
+            class="w-8 h-8 rounded border border-border cursor-pointer p-0">
+    </div>
+{% endblock %}
+
+{# Date Picker #}
+{% block date_picker_widget %}
+    {% set _input_classes = 'block w-full rounded-lg border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors disabled:bg-surface-alt disabled:cursor-not-allowed' %}
+    {% set _input_error = 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/20' %}
+    {% set _input_normal = 'border-border' %}
+    <div class="relative" data-controller="datepicker"
+        data-datepicker-format-value="{{ format|default('Y-m-d') }}"
+        data-datepicker-enable-time-value="{{ enable_time is defined and enable_time ? 'true' : 'false' }}">
+        <input type="text" {{ block('widget_attributes') }}
+            value="{{ value }}"
+            data-datepicker-target="input"
+            class="{{ _input_classes }} pr-10 {{ errors|length > 0 ? _input_error : _input_normal }}">
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </span>
+    </div>
+{% endblock %}
+
+{# Date Range #}
+{% block date_range_widget %}
+    <div data-controller="daterange" class="flex items-center gap-2">
+        <div class="flex-1">
+            {{ form_widget(form.start) }}
+        </div>
+        <span class="text-text-muted shrink-0">&rarr;</span>
+        <div class="flex-1">
+            {{ form_widget(form.end) }}
+        </div>
+    </div>
+{% endblock %}
+
+{# Tags #}
+{% block tags_widget %}
+    {% set _input_classes = 'block w-full rounded-lg border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors disabled:bg-surface-alt disabled:cursor-not-allowed' %}
+    {% set _input_error = 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/20' %}
+    {% set _input_normal = 'border-border' %}
+    <div data-controller="tags"
+         data-tags-max-items-value="{{ max_items ?? '' }}"
+         data-tags-delimiter-value="{{ delimiter ?? ',' }}">
+        <input type="text" {{ block('widget_attributes') }}
+            value="{{ value }}"
+            data-tags-target="input"
+            class="{{ _input_classes }} {{ errors|length > 0 ? _input_error : _input_normal }}">
+    </div>
+{% endblock %}
+
+{# Enhanced Choice (Tom Select) #}
+{% block enhanced_choice_widget %}
+    {% set _input_classes = 'block w-full rounded-lg border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors disabled:bg-surface-alt disabled:cursor-not-allowed' %}
+    {% set _input_error = 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/20' %}
+    {% set _input_normal = 'border-border' %}
+    <div data-controller="tomselect"
+         data-tomselect-searchable-value="true"
+         data-tomselect-placeholder-value="{{ placeholder ?? '' }}">
+        {% set attr = attr|merge({
+            'data-tomselect-target': 'select',
+            class: _input_classes ~ ' ' ~ (errors|length > 0 ? _input_error : _input_normal) ~ ' ' ~ (attr.class ?? '')
+        }) %}
+        {{ block('choice_widget_collapsed') }}
+    </div>
+{% endblock %}
+
+{# WYSIWYG (Trix) #}
+{% block wysiwyg_widget %}
+    <div data-controller="wysiwyg">
+        <input type="hidden" id="{{ id }}" name="{{ full_name }}" value="{{ value }}" data-wysiwyg-target="input">
+        <trix-editor input="{{ id }}" data-wysiwyg-target="editor"
+                     class="trix-content min-h-[200px] rounded-lg border {{ errors|length > 0 ? 'border-danger-500' : 'border-border' }} bg-surface text-text-primary text-sm p-3 focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors"></trix-editor>
+    </div>
+{% endblock %}
+
+{# Dropzone #}
+{% block dropzone_widget %}
+    <div data-controller="dropzone"
+         data-dropzone-max-file-size-value="{{ max_file_size ?? 5 }}"
+         data-dropzone-accepted-types-value="{{ accepted_types ?? '' }}"
+         data-dropzone-multiple-value="{{ multiple is defined and multiple ? 'true' : 'false' }}">
+        <div data-action="click->dropzone#browse dragover->dropzone#dragover dragleave->dropzone#dragleave drop->dropzone#drop"
+             class="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary-400 hover:bg-primary-50/50 dark:hover:bg-primary-950/20 transition-colors cursor-pointer">
+            <div data-dropzone-target="placeholder">
+                <svg class="mx-auto w-10 h-10 text-text-muted mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                <p class="text-sm text-text-secondary">Drag your files here or <span class="text-primary-600 font-medium">click to browse</span></p>
+            </div>
+            <div data-dropzone-target="preview" class="hidden space-y-2"></div>
+        </div>
+        <input type="file" {{ block('widget_attributes') }}
+            data-dropzone-target="input"
+            class="hidden"
+            {% if multiple is defined and multiple %}multiple{% endif %}>
+    </div>
+{% endblock %}

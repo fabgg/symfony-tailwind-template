@@ -1,0 +1,10 @@
+{% props multiple = false, defaultOpen = null %}
+
+<div {{ attributes.defaults({
+    class: 'divide-y divide-border border border-border rounded-lg',
+    'data-controller': 'accordion',
+    'data-accordion-multiple-value': multiple ? 'true' : 'false',
+    'data-accordion-open-items-value': defaultOpen ? '["' ~ defaultOpen ~ '"]' : '[]',
+}) }}>
+    {% block content %}{% endblock %}
+</div>

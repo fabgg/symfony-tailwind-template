@@ -1,0 +1,42 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}My Profile{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+{% block page_actions %}
+    <twig:Button variant="primary" size="sm" href="{{ path('app_profile_edit') }}">Edit</twig:Button>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+    <twig:Card>
+        <div class="flex items-center gap-4 mb-6">
+            <span class="w-16 h-16 rounded-full bg-primary-600 text-white flex items-center justify-center text-xl font-bold">
+                {{ app.user.initials }}
+            </span>
+            <div>
+                <h2 class="text-xl font-semibold text-text-primary">{{ app.user.fullName }}</h2>
+                <p class="text-text-secondary">{{ app.user.email }}</p>
+            </div>
+        </div>
+
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <dt class="text-sm font-medium text-text-muted">First name</dt>
+                <dd class="mt-1 text-text-primary">{{ app.user.firstName }}</dd>
+            </div>
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Last name</dt>
+                <dd class="mt-1 text-text-primary">{{ app.user.lastName }}</dd>
+            </div>
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Email</dt>
+                <dd class="mt-1 text-text-primary">{{ app.user.email }}</dd>
+            </div>
+            <div>
+                <dt class="text-sm font-medium text-text-muted">Member since</dt>
+                <dd class="mt-1 text-text-primary">{{ app.user.createdAt|date('Y-m-d') }}</dd>
+            </div>
+        </dl>
+    </twig:Card>
+</div>
+{% endblock %}

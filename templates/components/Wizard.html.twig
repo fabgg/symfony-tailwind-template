@@ -1,0 +1,10 @@
+{% props currentStep = 1, linear = true, variant = 'steps' %}
+
+<div {{ attributes.defaults({
+    'data-controller': 'wizard',
+    'data-wizard-current-step-value': currentStep,
+    'data-wizard-linear-value': linear ? 'true' : 'false',
+    'data-wizard-variant-value': variant,
+}) }}>
+    {% block content %}{% endblock %}
+</div>

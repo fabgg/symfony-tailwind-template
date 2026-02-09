@@ -1,0 +1,582 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Styleguide — Components{% endblock %}
+{% block page_title %}Components{% endblock %}
+
+{% block content %}
+<div class="space-y-12">
+
+    {# Buttons #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Buttons</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Button</code> component — variants and sizes.</p>
+
+        <twig:Card title="Variants">
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+                <twig:Button variant="primary">Primary</twig:Button>
+                <twig:Button variant="secondary">Secondary</twig:Button>
+                <twig:Button variant="success">Success</twig:Button>
+                <twig:Button variant="warning">Warning</twig:Button>
+                <twig:Button variant="danger">Danger</twig:Button>
+                <twig:Button variant="ghost">Ghost</twig:Button>
+                <twig:Button variant="primary" disabled>Disabled</twig:Button>
+            </div>
+
+            <h4 class="text-sm font-medium text-text-muted mb-3">Sizes</h4>
+            <div class="flex flex-wrap items-center gap-3">
+                <twig:Button variant="primary" size="xs">Extra Small</twig:Button>
+                <twig:Button variant="primary" size="sm">Small</twig:Button>
+                <twig:Button variant="primary" size="md">Medium</twig:Button>
+                <twig:Button variant="primary" size="lg">Large</twig:Button>
+            </div>
+
+            <h4 class="text-sm font-medium text-text-muted mt-6 mb-3">Button Groups</h4>
+            <div class="flex flex-wrap items-center gap-4">
+                <twig:ButtonGroup>
+                    <twig:Button variant="secondary">Left</twig:Button>
+                    <twig:Button variant="secondary">Center</twig:Button>
+                    <twig:Button variant="secondary">Right</twig:Button>
+                </twig:ButtonGroup>
+
+                <twig:ButtonGroup>
+                    <twig:Button variant="primary">Save</twig:Button>
+                    <twig:Button variant="danger">Delete</twig:Button>
+                </twig:ButtonGroup>
+
+                <twig:ButtonGroup>
+                    <twig:Button variant="secondary" size="sm">Day</twig:Button>
+                    <twig:Button variant="primary" size="sm">Week</twig:Button>
+                    <twig:Button variant="secondary" size="sm">Month</twig:Button>
+                </twig:ButtonGroup>
+            </div>
+        </twig:Card>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>&lt;twig:Button variant="primary"&gt;Primary&lt;/twig:Button&gt;
+&lt;twig:Button variant="success"&gt;Success&lt;/twig:Button&gt;
+&lt;twig:Button variant="warning"&gt;Warning&lt;/twig:Button&gt;
+&lt;twig:Button variant="danger"&gt;Danger&lt;/twig:Button&gt;
+&lt;twig:Button variant="ghost"&gt;Ghost&lt;/twig:Button&gt;
+&lt;twig:Button variant="primary" size="lg"&gt;Large&lt;/twig:Button&gt;
+&lt;twig:Button variant="primary" href="/url"&gt;Link&lt;/twig:Button&gt;
+
+{# Button group #}
+&lt;twig:ButtonGroup&gt;
+    &lt;twig:Button variant="secondary"&gt;Left&lt;/twig:Button&gt;
+    &lt;twig:Button variant="secondary"&gt;Center&lt;/twig:Button&gt;
+    &lt;twig:Button variant="secondary"&gt;Right&lt;/twig:Button&gt;
+&lt;/twig:ButtonGroup&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Alerts #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Alerts</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Alert</code> component — notifications and messages.</p>
+
+        <div class="space-y-3">
+            <twig:Alert type="success">Operation successful. Changes have been saved.</twig:Alert>
+            <twig:Alert type="error">An error occurred. Please try again.</twig:Alert>
+            <twig:Alert type="warning">Warning: this action is irreversible.</twig:Alert>
+            <twig:Alert type="info">Info: an update is available.</twig:Alert>
+            <twig:Alert type="success" dismissible>This alert can be dismissed.</twig:Alert>
+        </div>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>&lt;twig:Alert type="success"&gt;Message&lt;/twig:Alert&gt;
+&lt;twig:Alert type="error" dismissible&gt;Dismissible&lt;/twig:Alert&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Badges #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Badges</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Badge</code> component — labels and tags.</p>
+
+        <twig:Card>
+            <div class="flex flex-wrap items-center gap-3">
+                <twig:Badge>Default</twig:Badge>
+                <twig:Badge variant="success">Success</twig:Badge>
+                <twig:Badge variant="warning">Warning</twig:Badge>
+                <twig:Badge variant="danger">Danger</twig:Badge>
+                <twig:Badge variant="info">Info</twig:Badge>
+            </div>
+        </twig:Card>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>&lt;twig:Badge variant="success"&gt;Active&lt;/twig:Badge&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Cards #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Cards</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Card</code> component — container with optional title.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <twig:Card title="With title">
+                <p class="text-text-secondary">Card content with a title.</p>
+            </twig:Card>
+            <twig:Card>
+                <p class="text-text-secondary">Card without title, with default padding.</p>
+            </twig:Card>
+        </div>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>&lt;twig:Card title="Title"&gt;Content&lt;/twig:Card&gt;
+&lt;twig:Card :padding="false"&gt;No padding&lt;/twig:Card&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Modal #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Modal</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Modal</code> component — modal dialog.</p>
+
+        <twig:Card>
+            <div class="flex gap-3">
+                <twig:Button variant="primary" data-modal-trigger="demo-modal-sm">Modal SM</twig:Button>
+                <twig:Button variant="secondary" data-modal-trigger="demo-modal-md">Modal MD</twig:Button>
+                <twig:Button variant="secondary" data-modal-trigger="demo-modal-lg">Modal LG</twig:Button>
+            </div>
+        </twig:Card>
+
+        <twig:Modal id="demo-modal-sm" title="Small modal" size="sm">
+            <twig:Modal:Body>
+                <p class="text-text-secondary">Content of a small modal.</p>
+            </twig:Modal:Body>
+            <twig:Modal:Footer>
+                <twig:Button variant="secondary" data-action="modal#close">Close</twig:Button>
+            </twig:Modal:Footer>
+        </twig:Modal>
+
+        <twig:Modal id="demo-modal-md" title="Medium modal">
+            <twig:Modal:Body>
+                <p class="text-text-secondary">Content of a standard-sized modal.</p>
+            </twig:Modal:Body>
+            <twig:Modal:Footer>
+                <twig:Button variant="secondary" data-action="modal#close">Cancel</twig:Button>
+                <twig:Button variant="primary">Confirm</twig:Button>
+            </twig:Modal:Footer>
+        </twig:Modal>
+
+        <twig:Modal id="demo-modal-lg" title="Large modal" size="lg">
+            <twig:Modal:Body>
+                <p class="text-text-secondary">Content of a large modal for displaying more information.</p>
+            </twig:Modal:Body>
+            <twig:Modal:Footer>
+                <twig:Button variant="secondary" data-action="modal#close">Close</twig:Button>
+            </twig:Modal:Footer>
+        </twig:Modal>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>{# Trigger button #}
+&lt;twig:Button data-modal-trigger="my-modal"&gt;Open&lt;/twig:Button&gt;
+
+{# Modal #}
+&lt;twig:Modal id="my-modal" title="Title" size="md"&gt;
+    &lt;twig:Modal:Body&gt;
+        &lt;p&gt;Modal content.&lt;/p&gt;
+    &lt;/twig:Modal:Body&gt;
+    &lt;twig:Modal:Footer&gt;
+        &lt;twig:Button variant="secondary" data-action="modal#close"&gt;Cancel&lt;/twig:Button&gt;
+        &lt;twig:Button variant="primary"&gt;Confirm&lt;/twig:Button&gt;
+    &lt;/twig:Modal:Footer&gt;
+&lt;/twig:Modal&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Table #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Table</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Table</code> component — styled table with variants.</p>
+
+        <twig:Card title="Standard (hoverable)">
+            <twig:Table hoverable>
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase">Name</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase">Role</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+                    <tr><td class="px-4 py-3">Alice Martin</td><td class="px-4 py-3 text-text-secondary">Admin</td><td class="px-4 py-3"><twig:Badge variant="success">Active</twig:Badge></td></tr>
+                    <tr><td class="px-4 py-3">Bob Dupont</td><td class="px-4 py-3 text-text-secondary">Editor</td><td class="px-4 py-3"><twig:Badge variant="success">Active</twig:Badge></td></tr>
+                    <tr><td class="px-4 py-3">Claire Duval</td><td class="px-4 py-3 text-text-secondary">Viewer</td><td class="px-4 py-3"><twig:Badge variant="warning">Pending</twig:Badge></td></tr>
+                </tbody>
+            </twig:Table>
+        </twig:Card>
+
+        <div class="mt-4">
+            <twig:Card title="Striped">
+                <twig:Table striped hoverable>
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase">Name</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase">Email</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase">Role</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border">
+                        <tr><td class="px-4 py-3">Alice Martin</td><td class="px-4 py-3 text-text-secondary">alice@example.com</td><td class="px-4 py-3 text-text-secondary">Admin</td><td class="px-4 py-3"><twig:Badge variant="success">Active</twig:Badge></td></tr>
+                        <tr><td class="px-4 py-3">Bob Dupont</td><td class="px-4 py-3 text-text-secondary">bob@example.com</td><td class="px-4 py-3 text-text-secondary">Editor</td><td class="px-4 py-3"><twig:Badge variant="success">Active</twig:Badge></td></tr>
+                        <tr><td class="px-4 py-3">Claire Duval</td><td class="px-4 py-3 text-text-secondary">claire@example.com</td><td class="px-4 py-3 text-text-secondary">Viewer</td><td class="px-4 py-3"><twig:Badge variant="warning">Pending</twig:Badge></td></tr>
+                        <tr><td class="px-4 py-3">David Leroy</td><td class="px-4 py-3 text-text-secondary">david@example.com</td><td class="px-4 py-3 text-text-secondary">Editor</td><td class="px-4 py-3"><twig:Badge variant="danger">Inactive</twig:Badge></td></tr>
+                        <tr><td class="px-4 py-3">Emma Petit</td><td class="px-4 py-3 text-text-secondary">emma@example.com</td><td class="px-4 py-3 text-text-secondary">Admin</td><td class="px-4 py-3"><twig:Badge variant="success">Active</twig:Badge></td></tr>
+                    </tbody>
+                </twig:Table>
+            </twig:Card>
+        </div>
+
+        <div class="mt-4">
+            <twig:Card title="Condensed (xs)">
+                <twig:Table xs hoverable>
+                    <thead>
+                        <tr>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-text-muted uppercase">ID</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-text-muted uppercase">Name</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-text-muted uppercase">Email</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-text-muted uppercase">Role</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-text-muted uppercase">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border">
+                        <tr><td class="px-3 py-1.5">#001</td><td class="px-3 py-1.5">Alice Martin</td><td class="px-3 py-1.5 text-text-secondary">alice@example.com</td><td class="px-3 py-1.5 text-text-secondary">Admin</td><td class="px-3 py-1.5"><twig:Badge variant="success">Active</twig:Badge></td></tr>
+                        <tr><td class="px-3 py-1.5">#002</td><td class="px-3 py-1.5">Bob Dupont</td><td class="px-3 py-1.5 text-text-secondary">bob@example.com</td><td class="px-3 py-1.5 text-text-secondary">Editor</td><td class="px-3 py-1.5"><twig:Badge variant="success">Active</twig:Badge></td></tr>
+                        <tr><td class="px-3 py-1.5">#003</td><td class="px-3 py-1.5">Claire Duval</td><td class="px-3 py-1.5 text-text-secondary">claire@example.com</td><td class="px-3 py-1.5 text-text-secondary">Viewer</td><td class="px-3 py-1.5"><twig:Badge variant="warning">Pending</twig:Badge></td></tr>
+                        <tr><td class="px-3 py-1.5">#004</td><td class="px-3 py-1.5">David Leroy</td><td class="px-3 py-1.5 text-text-secondary">david@example.com</td><td class="px-3 py-1.5 text-text-secondary">Editor</td><td class="px-3 py-1.5"><twig:Badge variant="danger">Inactive</twig:Badge></td></tr>
+                        <tr><td class="px-3 py-1.5">#005</td><td class="px-3 py-1.5">Emma Petit</td><td class="px-3 py-1.5 text-text-secondary">emma@example.com</td><td class="px-3 py-1.5 text-text-secondary">Admin</td><td class="px-3 py-1.5"><twig:Badge variant="success">Active</twig:Badge></td></tr>
+                    </tbody>
+                </twig:Table>
+            </twig:Card>
+        </div>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>{# Standard #}
+&lt;twig:Table hoverable&gt;
+    &lt;thead&gt;...&lt;/thead&gt;
+    &lt;tbody class="divide-y divide-border"&gt;...&lt;/tbody&gt;
+&lt;/twig:Table&gt;
+
+{# Striped #}
+&lt;twig:Table striped hoverable&gt;...&lt;/twig:Table&gt;
+
+{# Condensed #}
+&lt;twig:Table xs hoverable&gt;...&lt;/twig:Table&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Pagination #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Pagination</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Pagination</code> component.</p>
+
+        <twig:Card>
+            <twig:Pagination currentPage="3" totalPages="10" route="app_styleguide_components" />
+        </twig:Card>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>&lt;twig:Pagination currentPage="3" totalPages="10" route="ma_route" /&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Breadcrumbs #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Breadcrumbs</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Breadcrumbs</code> component — two variants: basic (pipe) and modern (chevron).</p>
+
+        <twig:Card title="Basic (pipe separator)">
+            <twig:Breadcrumbs :items="[
+                {label: 'Home', url: '#'},
+                {label: 'Demo', url: '#'},
+                {label: 'Edit'}
+            ]" />
+        </twig:Card>
+
+        <div class="mt-4">
+            <twig:Card title="Modern (chevron separator)">
+                <twig:Breadcrumbs variant="modern" :items="[
+                    {label: 'Home', url: '#'},
+                    {label: 'Demo', url: '#'},
+                    {label: 'Article Alpha', url: '#'},
+                    {label: 'Edit'}
+                ]" />
+            </twig:Card>
+        </div>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>{# Basic (pipe separator) #}
+&lt;twig:Breadcrumbs :items="[
+    {label: 'Home', url: path('app_home')},
+    {label: 'Demo', url: path('app_demo_index')},
+    {label: 'Edit'}
+]" /&gt;
+
+{# Modern (chevron separator) #}
+&lt;twig:Breadcrumbs variant="modern" :items="[
+    {label: 'Home', url: path('app_home')},
+    {label: 'Demo', url: path('app_demo_index')},
+    {label: 'Edit'}
+]" /&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Tabs #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Tabs</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Tabs</code> component — horizontal and vertical tabs.</p>
+
+        <twig:Card title="Horizontal">
+            <twig:Tabs defaultTab="tab1">
+                <twig:Tabs:Tab id="tab1" label="General" />
+                <twig:Tabs:Tab id="tab2" label="Settings" />
+                <twig:Tabs:Tab id="tab3" label="Advanced" />
+
+                <twig:Tabs:Panel id="tab1">
+                    <p class="text-text-secondary">General tab content. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </twig:Tabs:Panel>
+                <twig:Tabs:Panel id="tab2">
+                    <p class="text-text-secondary">Settings tab content. Sed do eiusmod tempor incididunt ut labore.</p>
+                </twig:Tabs:Panel>
+                <twig:Tabs:Panel id="tab3">
+                    <p class="text-text-secondary">Advanced tab content. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                </twig:Tabs:Panel>
+            </twig:Tabs>
+        </twig:Card>
+
+        <div class="mt-4">
+            <twig:Card title="Vertical">
+                <twig:Tabs orientation="vertical" defaultTab="vtab1">
+                    <twig:Tabs:Tab id="vtab1" label="Profile" />
+                    <twig:Tabs:Tab id="vtab2" label="Security" />
+                    <twig:Tabs:Tab id="vtab3" label="Notifications" />
+
+                    <twig:Tabs:Panel id="vtab1">
+                        <p class="text-text-secondary">User profile settings.</p>
+                    </twig:Tabs:Panel>
+                    <twig:Tabs:Panel id="vtab2">
+                        <p class="text-text-secondary">Security and password settings.</p>
+                    </twig:Tabs:Panel>
+                    <twig:Tabs:Panel id="vtab3">
+                        <p class="text-text-secondary">Notification preferences.</p>
+                    </twig:Tabs:Panel>
+                </twig:Tabs>
+            </twig:Card>
+        </div>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>&lt;twig:Tabs defaultTab="general"&gt;
+    &lt;twig:Tabs:Tab id="general" label="General" /&gt;
+    &lt;twig:Tabs:Tab id="settings" label="Settings" /&gt;
+
+    &lt;twig:Tabs:Panel id="general"&gt;Content&lt;/twig:Tabs:Panel&gt;
+    &lt;twig:Tabs:Panel id="settings"&gt;Content&lt;/twig:Tabs:Panel&gt;
+&lt;/twig:Tabs&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Accordion #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Accordion</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Accordion</code> component — collapsible sections.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <h3 class="text-sm font-medium text-text-muted mb-2">Simple (single open)</h3>
+                <twig:Accordion defaultOpen="acc-1">
+                    <twig:Accordion:Item id="acc-1" title="What is Symfony?">
+                        <p>Symfony is a PHP framework for building robust and maintainable web applications.</p>
+                    </twig:Accordion:Item>
+                    <twig:Accordion:Item id="acc-2" title="What is Tailwind?">
+                        <p>Tailwind CSS is a utility-first CSS framework for building interfaces quickly.</p>
+                    </twig:Accordion:Item>
+                    <twig:Accordion:Item id="acc-3" title="Disabled section" disabled>
+                        <p>This section is disabled.</p>
+                    </twig:Accordion:Item>
+                </twig:Accordion>
+            </div>
+            <div>
+                <h3 class="text-sm font-medium text-text-muted mb-2">Multiple (several open)</h3>
+                <twig:Accordion multiple defaultOpen="macc-1">
+                    <twig:Accordion:Item id="macc-1" title="Section 1">
+                        <p>Section 1 content. Can be open at the same time as others.</p>
+                    </twig:Accordion:Item>
+                    <twig:Accordion:Item id="macc-2" title="Section 2">
+                        <p>Section 2 content.</p>
+                    </twig:Accordion:Item>
+                    <twig:Accordion:Item id="macc-3" title="Section 3">
+                        <p>Section 3 content.</p>
+                    </twig:Accordion:Item>
+                </twig:Accordion>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>{# Simple (single open) #}
+&lt;twig:Accordion defaultOpen="section-1"&gt;
+    &lt;twig:Accordion:Item id="section-1" title="Title"&gt;Content&lt;/twig:Accordion:Item&gt;
+    &lt;twig:Accordion:Item id="section-2" title="Title 2"&gt;Content&lt;/twig:Accordion:Item&gt;
+&lt;/twig:Accordion&gt;
+
+{# Multiple (several open) #}
+&lt;twig:Accordion multiple&gt;...&lt;/twig:Accordion&gt;
+
+{# Disabled section #}
+&lt;twig:Accordion:Item id="x" title="Title" disabled&gt;...&lt;/twig:Accordion:Item&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+    {# Wizard #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Wizard</h2>
+        <p class="text-sm text-text-muted mb-4"><code class="px-1 py-0.5 bg-surface-alt rounded text-xs font-mono">Wizard</code> component — multi-step form with two variants.</p>
+
+        <twig:Card title="Steps variant (default)">
+            <twig:Wizard>
+                <twig:Wizard:Step number="1" label="Information" />
+                <twig:Wizard:Step number="2" label="Details" />
+                <twig:Wizard:Step number="3" label="Confirmation" />
+
+                <twig:Wizard:Panel step="1">
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Step 1 — Information</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-text-primary mb-1">Name</label>
+                            <input type="text" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm" placeholder="Your name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-primary mb-1">Email</label>
+                            <input type="email" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm" placeholder="your@email.com">
+                        </div>
+                    </div>
+                </twig:Wizard:Panel>
+
+                <twig:Wizard:Panel step="2">
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Step 2 — Details</h3>
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-1">Description</label>
+                        <textarea class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm" rows="4" placeholder="Describe your project..."></textarea>
+                    </div>
+                </twig:Wizard:Panel>
+
+                <twig:Wizard:Panel step="3">
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Step 3 — Confirmation</h3>
+                    <p class="text-text-secondary">Review your information and click "Submit" to finish.</p>
+                </twig:Wizard:Panel>
+            </twig:Wizard>
+        </twig:Card>
+
+        <div class="mt-4">
+            <twig:Card title="Progress variant (progress bar)">
+                <twig:Wizard variant="progress" :linear="false">
+                    <twig:Wizard:Step number="1" label="Account" />
+                    <twig:Wizard:Step number="2" label="Profile" />
+                    <twig:Wizard:Step number="3" label="Preferences" />
+                    <twig:Wizard:Step number="4" label="Validation" />
+
+                    <twig:Wizard:Panel step="1">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Create your account</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-1">Email address</label>
+                                <input type="email" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm" placeholder="your@email.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-1">Password</label>
+                                <input type="password" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm" placeholder="••••••••">
+                            </div>
+                        </div>
+                    </twig:Wizard:Panel>
+
+                    <twig:Wizard:Panel step="2">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Complete your profile</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-1">First name</label>
+                                <input type="text" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm" placeholder="John">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-1">Last name</label>
+                                <input type="text" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm" placeholder="Doe">
+                            </div>
+                        </div>
+                    </twig:Wizard:Panel>
+
+                    <twig:Wizard:Panel step="3">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Your preferences</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+                                <input type="checkbox" class="rounded border-border text-primary-600 focus:ring-primary-500"> Receive email notifications
+                            </label>
+                            <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+                                <input type="checkbox" class="rounded border-border text-primary-600 focus:ring-primary-500"> Enable dark mode by default
+                            </label>
+                        </div>
+                    </twig:Wizard:Panel>
+
+                    <twig:Wizard:Panel step="4">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">All set!</h3>
+                        <p class="text-text-secondary">Review your information and click "Submit" to create your account.</p>
+                    </twig:Wizard:Panel>
+                </twig:Wizard>
+            </twig:Card>
+        </div>
+
+        <div class="mt-3">
+            <details class="text-sm">
+                <summary class="cursor-pointer text-text-muted hover:text-text-secondary">Code Twig</summary>
+                <pre class="mt-2 p-4 bg-surface-alt rounded-lg text-xs overflow-x-auto"><code>{# Steps variant (default) #}
+&lt;twig:Wizard&gt;
+    &lt;twig:Wizard:Step number="1" label="Info" /&gt;
+    &lt;twig:Wizard:Step number="2" label="Details" /&gt;
+
+    &lt;twig:Wizard:Panel step="1"&gt;Step 1 content&lt;/twig:Wizard:Panel&gt;
+    &lt;twig:Wizard:Panel step="2"&gt;Step 2 content&lt;/twig:Wizard:Panel&gt;
+&lt;/twig:Wizard&gt;
+
+{# Progress variant (progress bar) #}
+&lt;twig:Wizard variant="progress" :linear="false"&gt;
+    &lt;twig:Wizard:Step number="1" label="Account" /&gt;
+    &lt;twig:Wizard:Step number="2" label="Profile" /&gt;
+
+    &lt;twig:Wizard:Panel step="1"&gt;Content&lt;/twig:Wizard:Panel&gt;
+    &lt;twig:Wizard:Panel step="2"&gt;Content&lt;/twig:Wizard:Panel&gt;
+&lt;/twig:Wizard&gt;</code></pre>
+            </details>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

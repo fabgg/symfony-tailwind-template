@@ -1,0 +1,52 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Demo — Listing{% endblock %}
+{% block page_title %}Demo{% endblock %}
+{% block page_actions %}
+    <twig:Button variant="primary" size="sm" href="{{ path('app_demo_new') }}">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
+        Create
+    </twig:Button>
+{% endblock %}
+
+{% block content %}
+<twig:Card>
+    <twig:Table>
+        <thead>
+            <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Name</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Category</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Status</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Priority</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Date</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Color</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-text-muted uppercase tracking-wider">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+            {% for item in items %}
+            <tr class="hover:bg-surface-hover transition-colors">
+                <td class="px-4 py-3 text-sm font-medium text-text-primary">
+                    <a href="{{ path('app_demo_show', {id: item.id}) }}" class="hover:text-primary-600 transition-colors">{{ item.name }}</a>
+                </td>
+                <td class="px-4 py-3 text-sm text-text-secondary">{{ item.category }}</td>
+                <td class="px-4 py-3"><twig:Badge variant="{{ item.status }}">{{ item.statusLabel }}</twig:Badge></td>
+                <td class="px-4 py-3 text-sm text-text-secondary">{{ item.priority }}</td>
+                <td class="px-4 py-3 text-sm text-text-secondary">{{ item.date }}</td>
+                <td class="px-4 py-3">
+                    <span class="inline-block w-5 h-5 rounded border border-border" style="background-color: {{ item.color }}"></span>
+                </td>
+                <td class="px-4 py-3 text-right">
+                    <div class="flex items-center justify-end gap-1">
+                        <twig:Button variant="ghost" size="xs" href="{{ path('app_demo_show', {id: item.id}) }}">View</twig:Button>
+                        <twig:Button variant="ghost" size="xs" href="{{ path('app_demo_edit', {id: item.id}) }}">Edit</twig:Button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </twig:Table>
+</twig:Card>
+
+<twig:Pagination currentPage="{{ currentPage }}" totalPages="{{ totalPages }}" route="app_demo_index" />
+{% endblock %}

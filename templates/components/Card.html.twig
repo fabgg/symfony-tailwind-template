@@ -1,0 +1,14 @@
+{% props title = null, padding = true %}
+
+<div {{ attributes.defaults({
+    class: 'bg-surface border border-border rounded-lg shadow-sm',
+}) }}>
+    {% if title %}
+        <div class="px-6 py-4 border-b border-border">
+            <h3 class="text-lg font-semibold text-text-primary">{{ title }}</h3>
+        </div>
+    {% endif %}
+    <div class="{{ padding ? 'p-6' : '' }}">
+        {% block content %}{% endblock %}
+    </div>
+</div>

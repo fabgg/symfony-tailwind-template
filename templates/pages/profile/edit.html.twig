@@ -1,0 +1,22 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Edit my profile{% endblock %}
+{% block page_title %}Edit my profile{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+    <twig:Card>
+        {{ form_start(form) }}
+            {{ form_row(form.email) }}
+            <div class="grid grid-cols-2 gap-4">
+                <div>{{ form_row(form.firstName) }}</div>
+                <div>{{ form_row(form.lastName) }}</div>
+            </div>
+            <div class="flex justify-end gap-2 mt-6">
+                <twig:Button variant="secondary" href="{{ path('app_profile_show') }}">Cancel</twig:Button>
+                <twig:Button type="submit" variant="primary">Save</twig:Button>
+            </div>
+        {{ form_end(form) }}
+    </twig:Card>
+</div>
+{% endblock %}

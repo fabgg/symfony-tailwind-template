@@ -1,0 +1,16 @@
+{% extends 'layouts/auth.html.twig' %}
+
+{% block title %}Page not found{% endblock %}
+
+{% block content %}
+<div class="bg-surface rounded-lg shadow-sm border border-border p-8 text-center">
+    <div class="mb-6">
+        <span class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-warning-100 dark:bg-warning-900 text-warning-600 dark:text-warning-400 mb-4">
+            <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+        </span>
+    </div>
+    <h1 class="text-4xl font-bold text-text-primary mb-2">404</h1>
+    <p class="text-lg text-text-secondary mb-6">The page you are looking for does not exist or has been moved.</p>
+    <twig:Button variant="primary" href="{{ path('app_home') }}">Back to home</twig:Button>
+</div>
+{% endblock %}

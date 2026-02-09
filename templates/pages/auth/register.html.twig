@@ -1,0 +1,28 @@
+{% extends 'layouts/auth.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="bg-surface rounded-lg shadow-sm border border-border p-8">
+    <h2 class="text-2xl font-bold text-text-primary text-center mb-6">Create account</h2>
+
+    {{ form_start(form) }}
+        <div class="grid grid-cols-2 gap-4">
+            <div>{{ form_row(form.firstName) }}</div>
+            <div>{{ form_row(form.lastName) }}</div>
+        </div>
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+
+        <div class="mt-6">
+            <twig:Button type="submit" variant="primary" class="w-full">Create my account</twig:Button>
+        </div>
+    {{ form_end(form) }}
+
+    <p class="mt-6 text-center text-sm text-text-secondary">
+        Already have an account?
+        <a href="{{ path('app_login') }}" class="text-primary-600 hover:text-primary-700 font-medium">Sign in</a>
+    </p>
+</div>
+{% endblock %}

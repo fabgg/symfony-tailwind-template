@@ -1,0 +1,247 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block title %}Styleguide — Forms{% endblock %}
+{% block page_title %}Forms{% endblock %}
+
+{% block content %}
+<div class="space-y-12">
+
+    {# Native form fields showcase #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Native Fields</h2>
+        <p class="text-sm text-text-muted mb-4">All native Symfony field types with the Tailwind form theme.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {# Text input #}
+            <twig:Card title="Text">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-text-primary mb-1">Normal</label>
+                    <input type="text" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors" placeholder="Enter text">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-danger-600 mb-1">Error state <span class="text-danger-500">*</span></label>
+                    <input type="text" class="block w-full rounded-lg border border-danger-500 bg-surface px-3 py-2 text-sm text-text-primary focus:border-danger-500 focus:ring-2 focus:ring-danger-500/20 focus:outline-none transition-colors" value="Invalid value">
+                    <p class="text-sm text-danger-600 mt-1 flex items-center gap-1">
+                        <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        This field is required.
+                    </p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-text-primary mb-1">Disabled</label>
+                    <input type="text" disabled class="block w-full rounded-lg border border-border bg-surface-alt px-3 py-2 text-sm text-text-primary cursor-not-allowed" value="Not editable">
+                </div>
+            </twig:Card>
+
+            {# Email #}
+            <twig:Card title="Email">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-text-primary mb-1">Email</label>
+                    <input type="email" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors" placeholder="name@example.com">
+                    <p class="text-sm text-text-muted mt-1">Your professional email address.</p>
+                </div>
+            </twig:Card>
+
+            {# Password #}
+            <twig:Card title="Password">
+                <div data-controller="password-visibility">
+                    <label class="block text-sm font-medium text-text-primary mb-1">Password</label>
+                    <div class="relative">
+                        <input type="password" data-password-visibility-target="input" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 pr-10 text-sm text-text-primary focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors" value="secret123">
+                        <button type="button" data-action="password-visibility#toggle" class="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors">
+                            <span data-password-visibility-target="icon">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </twig:Card>
+
+            {# Number #}
+            <twig:Card title="Number">
+                <label class="block text-sm font-medium text-text-primary mb-1">Quantity</label>
+                <input type="number" class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors" value="42" min="0">
+            </twig:Card>
+
+            {# Textarea #}
+            <twig:Card title="Textarea">
+                <label class="block text-sm font-medium text-text-primary mb-1">Description</label>
+                <textarea class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary min-h-[100px] focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors" rows="4" placeholder="Enter a description..."></textarea>
+            </twig:Card>
+
+            {# Select #}
+            <twig:Card title="Select">
+                <label class="block text-sm font-medium text-text-primary mb-1">Category</label>
+                <select class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary appearance-none focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E&quot;); background-position: right 0.5rem center; background-size: 1rem; background-repeat: no-repeat; padding-right: 2rem;">
+                    <option value="">Select...</option>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+            </twig:Card>
+
+            {# Checkbox & Radio #}
+            <twig:Card title="Checkbox & Radio">
+                <div class="mb-4">
+                    <span class="block text-sm font-medium text-text-primary mb-2">Checkboxes</span>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+                            <input type="checkbox" checked class="rounded border-border text-primary-600 focus:ring-primary-500"> Option A
+                        </label>
+                        <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+                            <input type="checkbox" class="rounded border-border text-primary-600 focus:ring-primary-500"> Option B
+                        </label>
+                        <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer opacity-50">
+                            <input type="checkbox" disabled class="rounded border-border"> Disabled
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <span class="block text-sm font-medium text-text-primary mb-2">Radios</span>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+                            <input type="radio" name="demo-radio" checked class="border-border text-primary-600 focus:ring-primary-500"> Choice 1
+                        </label>
+                        <label class="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+                            <input type="radio" name="demo-radio" class="border-border text-primary-600 focus:ring-primary-500"> Choice 2
+                        </label>
+                    </div>
+                </div>
+            </twig:Card>
+
+            {# File #}
+            <twig:Card title="File">
+                <label class="block text-sm font-medium text-text-primary mb-1">File</label>
+                <input type="file" class="block w-full text-sm text-text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 dark:file:bg-primary-900 dark:file:text-primary-200 cursor-pointer">
+            </twig:Card>
+        </div>
+    </section>
+
+    {# Enriched fields #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Enhanced Fields</h2>
+        <p class="text-sm text-text-muted mb-4">Custom Form Types with Flatpickr, Tom Select and Trix.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {# Color Picker #}
+            <twig:Card title="ColorPicker">
+                <div data-controller="colorpicker" class="flex items-center gap-2">
+                    <span data-colorpicker-target="preview" class="w-8 h-8 rounded border border-border shrink-0" style="background-color: #3b82f6"></span>
+                    <input type="text" value="#3b82f6" data-colorpicker-target="text" data-action="input->colorpicker#syncFromText"
+                           class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors flex-1">
+                    <input type="color" value="#3b82f6" data-colorpicker-target="color" data-action="input->colorpicker#syncFromColor"
+                           class="w-8 h-8 rounded border border-border cursor-pointer p-0">
+                </div>
+            </twig:Card>
+
+            {# DatePicker #}
+            <twig:Card title="DatePicker">
+                <div class="relative" data-controller="datepicker" data-datepicker-format-value="Y-m-d">
+                    <input type="text" data-datepicker-target="input" placeholder="Select a date"
+                           class="block w-full rounded-lg border border-border bg-surface px-3 py-2 pr-10 text-sm text-text-primary focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors">
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </span>
+                </div>
+            </twig:Card>
+
+            {# Tags #}
+            <twig:Card title="Tags">
+                <div data-controller="tags" data-tags-delimiter-value=",">
+                    <input type="text" data-tags-target="input" value="symfony,tailwind,php"
+                           class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors">
+                </div>
+                <p class="text-sm text-text-muted mt-1">Enter tags separated by commas.</p>
+            </twig:Card>
+
+            {# Enhanced Select #}
+            <twig:Card title="Enhanced Select (Tom Select)">
+                <div data-controller="tomselect" data-tomselect-placeholder-value="Search...">
+                    <select data-tomselect-target="select" multiple class="block w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm">
+                        <option value="php">PHP</option>
+                        <option value="symfony" selected>Symfony</option>
+                        <option value="js">JavaScript</option>
+                        <option value="tailwind" selected>Tailwind CSS</option>
+                        <option value="docker">Docker</option>
+                        <option value="pg">PostgreSQL</option>
+                    </select>
+                </div>
+            </twig:Card>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 gap-6">
+            {# WYSIWYG #}
+            <twig:Card title="WYSIWYG (Trix)">
+                <div data-controller="wysiwyg">
+                    <input type="hidden" id="styleguide-wysiwyg" value="<p>Sample <strong>rich</strong> content with <em>formatting</em>.</p>" data-wysiwyg-target="input">
+                    <trix-editor input="styleguide-wysiwyg" data-wysiwyg-target="editor"
+                                 class="trix-content min-h-[200px] rounded-lg border border-border bg-surface text-text-primary text-sm p-3 focus:border-border-focus focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-colors"></trix-editor>
+                </div>
+            </twig:Card>
+
+            {# Dropzone #}
+            <twig:Card title="Dropzone">
+                <div data-controller="dropzone" data-dropzone-max-file-size-value="5" data-dropzone-accepted-types-value="image/*">
+                    <div data-action="click->dropzone#browse dragover->dropzone#dragover dragleave->dropzone#dragleave drop->dropzone#drop"
+                         class="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary-400 hover:bg-primary-50/50 dark:hover:bg-primary-950/20 transition-colors cursor-pointer">
+                        <div data-dropzone-target="placeholder">
+                            <svg class="mx-auto w-10 h-10 text-text-muted mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                            <p class="text-sm text-text-secondary">Drag your files here or <span class="text-primary-600 font-medium">click to browse</span></p>
+                            <p class="text-xs text-text-muted mt-1">Images only, 5 MB max</p>
+                        </div>
+                        <div data-dropzone-target="preview" class="hidden space-y-2"></div>
+                    </div>
+                    <input type="file" data-dropzone-target="input" class="hidden" accept="image/*">
+                </div>
+            </twig:Card>
+        </div>
+    </section>
+
+    {# Interactive demo form #}
+    <section>
+        <h2 class="text-lg font-semibold text-text-primary mb-2">Interactive Form</h2>
+        <p class="text-sm text-text-muted mb-4">Complete form using the Symfony form theme with all field types.</p>
+
+        <twig:Card>
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                    <div>{{ form_row(form.name) }}</div>
+                    <div>{{ form_row(form.email) }}</div>
+                </div>
+
+                {{ form_row(form.password) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.richDescription) }}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                    <div>{{ form_row(form.category) }}</div>
+                    <div>{{ form_row(form.enhancedCategory) }}</div>
+                </div>
+
+                {{ form_row(form.tags) }}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                    <div>{{ form_row(form.publishedAt) }}</div>
+                    <div>{{ form_row(form.quantity) }}</div>
+                </div>
+
+                {{ form_row(form.validityPeriod) }}
+                {{ form_row(form.color) }}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                    <div>{{ form_row(form.active) }}</div>
+                    <div>{{ form_row(form.priority) }}</div>
+                </div>
+
+                {{ form_row(form.image) }}
+
+                <div class="flex justify-end gap-2 mt-6 pt-6 border-t border-border">
+                    <twig:Button type="submit" variant="primary">Submit</twig:Button>
+                </div>
+            {{ form_end(form) }}
+        </twig:Card>
+    </section>
+
+</div>
+{% endblock %}
