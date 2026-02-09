@@ -13,7 +13,7 @@ A ready-to-use Symfony 7.4 starter kit with Tailwind CSS, Stimulus, Turbo, and a
 
 ```bash
 # 1. Clone the repository
-git clone <repository-url> my-project
+git clone git@github.com:fabgg/symfony-tailwind-template.git my-project
 cd my-project
 
 # 2. Install PHP dependencies
