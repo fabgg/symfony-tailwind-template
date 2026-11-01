@@ -4,7 +4,7 @@ A ready-to-use Symfony 7.4 starter kit with Tailwind CSS, Stimulus, Turbo, and a
 
 ## Requirements
 
-- PHP 8.2+
+- PHP 8.4+
 - [Composer](https://getcomposer.org/)
 - [Symfony CLI](https://symfony.com/download) (recommended)
 - [Docker](https://www.docker.com/) (for PostgreSQL)
