@@ -1,0 +1,10 @@
+{#
+    Active filter, removable: a link to the same list without this filter.
+    <twig:FilterChip label="Status: active" href="{{ url_without_status }}" />
+#}
+{% props label, href %}
+<a href="{{ href }}" {{ attributes.defaults({class: 'inline-flex items-center gap-1 rounded-full border border-primary-200 bg-primary-50 py-1 pl-3 pr-2 text-sm text-primary-800 hover:bg-primary-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-200'}) }}
+   aria-label="{{ 'list.remove_filter'|trans({filter: label}) }}">
+    <span>{{ label }}</span>
+    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12"/></svg>
+</a>

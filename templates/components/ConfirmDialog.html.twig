@@ -1,0 +1,35 @@
+{#
+    Confirmation dialog for destructive or irreversible actions. Submits a POST form with a CSRF token
+    (never a GET link). Name the object in the title and list the consequences in the body.
+
+    <twig:Button variant="danger" data-modal-trigger="delete-site">Delete</twig:Button>
+    <twig:ConfirmDialog id="delete-site" title="Delete the site AGEN?"
+        action="{{ path('site_delete', {id: site.id}) }}" csrfTokenId="delete-site-{{ site.id }}"
+        confirmLabel="Delete the site">
+        <p>The leases and alerts of this site will be deactivated.</p>
+    </twig:ConfirmDialog>
+
+    Controller: if ($this->isCsrfTokenValid('delete-site-'.$id, $request->getPayload()->getString('_token'))) { … }
+#}
+{% props id, title, action, csrfTokenId, confirmLabel = null, cancelLabel = null, variant = 'danger', method = 'POST' %}
+{% set _body %}{% block content %}{% endblock %}{% endset %}
+
+<twig:Modal id="{{ id }}" title="{{ title }}" size="md">
+    <form method="post" action="{{ action }}">
+        {% if method|upper != 'POST' %}<input type="hidden" name="_method" value="{{ method|upper }}">{% endif %}
+        <input type="hidden" name="_token" value="{{ csrf_token(csrfTokenId) }}">
+
+        <div class="px-6 py-4 text-sm text-text-secondary space-y-2 text-pretty">
+            {{ _body|raw }}
+        </div>
+
+        <div class="px-6 py-4 border-t border-border flex justify-end gap-2">
+            <twig:Button variant="secondary" type="button" data-action="modal#close" data-modal-initial-focus>
+                {{ cancelLabel ?? ('confirm.cancel'|trans) }}
+            </twig:Button>
+            <twig:Button variant="{{ variant }}" type="submit" data-controller="submit-once">
+                {{ confirmLabel ?? ('confirm.confirm'|trans) }}
+            </twig:Button>
+        </div>
+    </form>
+</twig:Modal>

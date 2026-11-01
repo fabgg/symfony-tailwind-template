@@ -1,0 +1,29 @@
+{#
+    Empty state: explain why there is nothing and offer the next action.
+    <twig:EmptyState title="No site matches “agen”" icon="search">
+        <twig:Button variant="secondary" href="…">Clear the filters</twig:Button>
+    </twig:EmptyState>
+    `description`: optional text. `icon`: inbox (default) | search | plus | none. Content = actions.
+#}
+{% props title, description = null, icon = 'inbox' %}
+{% set icons = {
+    inbox: '<path d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>',
+    search: '<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>',
+    plus: '<path d="M12 4v16m8-8H4"/>',
+} %}
+{% set _actions %}{% block content %}{% endblock %}{% endset %}
+
+<div {{ attributes.defaults({class: 'flex flex-col items-center justify-center px-6 py-12 text-center'}) }}>
+    {% if icons[icon] is defined %}
+        <span class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-surface-alt text-text-muted">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">{{ icons[icon]|raw }}</svg>
+        </span>
+    {% endif %}
+    <p class="text-base font-semibold text-text-primary text-balance">{{ title }}</p>
+    {% if description %}
+        <p class="mt-1 max-w-md text-sm text-text-secondary text-pretty">{{ description }}</p>
+    {% endif %}
+    {% if _actions|trim is not empty %}
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2">{{ _actions|raw }}</div>
+    {% endif %}
+</div>

@@ -207,6 +207,14 @@ Reusable Twig components using `symfony/ux-twig-component`:
 | **Text** | `<twig:Text variant="secondary" size="sm">...</twig:Text>` |
 | **Accordion** | `<twig:Accordion>...</twig:Accordion>` |
 | **Wizard** | `<twig:Wizard>...</twig:Wizard>` |
+| **ActionMenu** | `<twig:ActionMenu label="Actions for X"><twig:ActionMenu:Item href="…">Edit</twig:ActionMenu:Item></twig:ActionMenu>` — ⋯ menu, full keyboard support |
+| **ConfirmDialog** | `<twig:ConfirmDialog id="del" title="Delete X?" action="…" csrfTokenId="delete-1">…</twig:ConfirmDialog>` — POST + CSRF |
+| **DescriptionList** | `<twig:DescriptionList columns="2"><twig:DescriptionList:Item label="SIREN" value="…" /></twig:DescriptionList>` — empty value shown as « — » |
+| **EmptyState** | `<twig:EmptyState title="No result" icon="search">actions</twig:EmptyState>` |
+| **ListToolbar** | `<twig:ListToolbar :activeFilters="[{param: 'status', label: 'Status: active'}]">…</twig:ListToolbar>` — GET form, state in the URL |
+| **SearchInput** | `<twig:SearchInput value="{{ q }}" />` — clear button, « / » shortcut, debounced submit |
+| **FilterChip** | `<twig:FilterChip label="Status: active" href="…" />` |
+| **Toast:Region** | `<twig:Toast:Region />` in the layout — flash messages as toasts (errors stay until closed) |
 
 ## Paginated lists (KnpPaginator)
 
@@ -228,6 +236,10 @@ $pagination->setCustomParameters(['page_sizes' => [25, 50, 100], 'item_label' =>
 - Tailwind templates: `templates/knp_paginator/pagination.html.twig` (summary « 1–25 of 454 », page size selector, accessible navigation) and `sortable_link.html.twig`; configured in `config/packages/knp_paginator.yaml`.
 - The whole state (search, filters, sort, page, page size) lives in the URL: shareable links, Back button works.
 - `autosubmit` Stimulus controller: submits filter forms on change (debounced for text inputs).
+
+## Accessibility
+
+Components follow the WAI-ARIA patterns: `Modal` is a real dialog (`role="dialog"`, `aria-modal`, focus trapped, focus returned to the trigger), `ActionMenu` is a menu button (arrow keys, Home/End, type-ahead, Escape), sortable headers set `aria-sort`, flash messages are announced (`role="status"` / `role="alert"`). Buttons show their focus ring on keyboard focus only (`focus-visible`). The `submit-once` Stimulus controller prevents double submissions and shows a spinner.
 
 ## Translations
 

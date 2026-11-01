@@ -1,0 +1,47 @@
+{#
+    Toolbar of a paginated list: search + filters + active filter chips + reset. GET form: the whole
+    state stays in the URL. Sort, direction and page size are preserved; the page is reset to 1.
+
+    <twig:ListToolbar :activeFilters="[{param: 'status', label: 'Status: active'}]">
+        <twig:SearchInput value="{{ search }}" placeholder="Name, city…" />
+        <twig:block name="filters">
+            <select name="status" data-action="autosubmit#submit" aria-label="Status">…</select>
+        </twig:block>
+    </twig:ListToolbar>
+
+    activeFilters: list of {param, label} (one chip per filter, removing only that parameter).
+    keep: query parameters preserved when the form is submitted.
+#}
+{% props activeFilters = [], keep = ['sort', 'direction', 'limit'] %}
+{% set _route = app.request.attributes.get('_route') %}
+{% set _routeParams = app.request.attributes.get('_route_params') ?? {} %}
+{% set _query = app.request.query.all %}
+
+<div {{ attributes.defaults({class: 'mb-4 space-y-3'}) }}>
+    <form method="get" action="{{ path(_route, _routeParams) }}" role="search" data-controller="autosubmit"
+          class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        {% for name in keep %}
+            {% if _query[name] is defined and _query[name] is not iterable %}
+                <input type="hidden" name="{{ name }}" value="{{ _query[name] }}">
+            {% endif %}
+        {% endfor %}
+        {% block content %}{% endblock %}
+        <div class="flex flex-wrap items-center gap-2">{% block filters %}{% endblock %}</div>
+        <noscript><button type="submit" class="rounded-lg border border-border px-3 py-2 text-sm">{{ 'list.apply'|trans }}</button></noscript>
+    </form>
+
+    {% if activeFilters is not empty %}
+        <div class="flex flex-wrap items-center gap-2" aria-label="{{ 'list.active_filters'|trans }}" role="group">
+            {% for filter in activeFilters %}
+                <twig:FilterChip label="{{ filter.label }}"
+                    href="{{ path(_route, _routeParams|merge(_query|filter((v, k) => k != filter.param and k != 'page'))) }}" />
+            {% endfor %}
+            {% if activeFilters|length > 1 %}
+                <a href="{{ path(_route, _routeParams|merge(_query|filter((v, k) => k in keep))) }}"
+                   class="text-sm text-primary-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded">
+                    {{ 'list.reset_filters'|trans }}
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

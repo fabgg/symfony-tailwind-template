@@ -14,5 +14,25 @@ wizard:
     next: Suivant
     finish: Terminer
     step: 'Étape {current} sur {total}'
+modal:
+    close: Fermer
+confirm:
+    cancel: Annuler
+    confirm: Confirmer
+menu:
+    more_actions: Autres actions
+value:
+    empty: Non renseigné
+toast:
+    dismiss: Fermer la notification
+search:
+    label: Rechercher
+    placeholder: Rechercher…
+    clear: Effacer la recherche
+list:
+    apply: Appliquer
+    active_filters: Filtres actifs
+    reset_filters: Réinitialiser les filtres
+    remove_filter: 'Retirer le filtre : {filter}'
 demo:
     items: éléments

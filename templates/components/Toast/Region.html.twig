@@ -1,0 +1,40 @@
+{#
+    Renders the flash messages as toasts (bottom right). Put it once in the layout:
+    <twig:Toast:Region />
+    success/info: polite live region, auto-dismissed after `duration` ms (paused on hover/focus).
+    error/warning: role="alert", stay until closed (the user must be able to read and act).
+#}
+{% props duration = 5000 %}
+{% set styles = {
+    success: 'border-success-200 dark:border-success-800',
+    info: 'border-info-200 dark:border-info-800',
+    warning: 'border-warning-200 dark:border-warning-800',
+    error: 'border-danger-200 dark:border-danger-800',
+    danger: 'border-danger-200 dark:border-danger-800',
+} %}
+{% set icons = {
+    success: '<path class="text-success-600" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+    info: '<path class="text-info-600" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+    warning: '<path class="text-warning-600" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>',
+    error: '<path class="text-danger-600" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+} %}
+
+<div class="pointer-events-none fixed bottom-4 right-4 z-[60] flex w-full max-w-sm flex-col gap-2" aria-live="polite" aria-relevant="additions">
+    {% for type, messages in app.flashes %}
+        {% set _persistent = type in ['error', 'danger', 'warning'] %}
+        {% for message in messages %}
+            <div class="pointer-events-auto flex items-start gap-3 rounded-lg border bg-surface p-4 shadow-lg motion-safe:animate-[toast-in_200ms_ease-out] {{ styles[type] ?? styles.info }}"
+                 {% if _persistent %}role="alert"{% else %}role="status"{% endif %}
+                 data-controller="toast" data-toast-duration-value="{{ _persistent ? 0 : duration }}"
+                 data-action="mouseenter->toast#pause mouseleave->toast#resume focusin->toast#pause focusout->toast#resume">
+                <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">{{ (icons[type] ?? icons[type == 'danger' ? 'error' : 'info'])|raw }}</svg>
+                <p class="flex-1 text-sm text-text-primary text-pretty">{{ message|trans }}</p>
+                <button type="button" data-action="toast#dismiss"
+                        class="shrink-0 rounded p-0.5 text-text-muted hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                        aria-label="{{ 'toast.dismiss'|trans }}">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
