@@ -27,7 +27,9 @@ export default class extends Controller {
         document.addEventListener('turbo:load', this._reset);
     }
 
+    // Only undo what this controller did: a button disabled for another reason stays disabled.
     reset() {
+        if (this.element.getAttribute('aria-busy') !== 'true') return;
         this.element.disabled = false;
         this.element.removeAttribute('aria-busy');
         this.element.querySelector('[data-submit-once-spinner]')?.remove();
