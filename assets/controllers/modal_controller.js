@@ -9,6 +9,7 @@ const FOCUSABLE = [
  * Accessible modal: role="dialog" + aria-modal on the dialog element (see Modal.html.twig),
  * focus trapped while open, focus returned to the trigger on close, Escape closes.
  * Open: any element with data-modal-trigger="<modal id>", or dispatch "modal:open" on the element.
+ * The trigger may name the field to focus with data-modal-focus="<field id>" (e.g. a « Complete » link).
  */
 export default class extends Controller {
     static targets = ['dialog'];
@@ -51,7 +52,7 @@ export default class extends Controller {
         this.openValue = true;
         this.element.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        this._focusFirst();
+        this._focusFirst(trigger instanceof HTMLElement ? trigger.dataset.modalFocus : null);
         window.dispatchEvent(new CustomEvent('modal:opened', { detail: { id: this.element.id } }));
     }
 
@@ -86,9 +87,10 @@ export default class extends Controller {
 
     // Focus order: [autofocus] / [data-modal-initial-focus], else the first form field,
     // else the first focusable element after the close button.
-    _focusFirst() {
+    _focusFirst(fieldId = null) {
         const items = this._focusables();
-        const preferred = this.dialogTarget?.querySelector('[autofocus], [data-modal-initial-focus]');
+        const requested = fieldId ? this.element.querySelector(`#${CSS.escape(fieldId)}`) : null;
+        const preferred = requested || this.dialogTarget?.querySelector('[autofocus], [data-modal-initial-focus]');
         const firstField = items.find((el) => el.matches('input, select, textarea'));
         (preferred || firstField || items[1] || items[0])?.focus();
     }
