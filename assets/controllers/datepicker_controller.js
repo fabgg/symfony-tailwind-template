@@ -49,9 +49,19 @@ export default class extends Controller {
             });
             this._originalId = id;
         }
+
+        // A modal gives initial focus to its first field: when that field is a date, flatpickr opens on focus
+        // and its calendar covers the next fields. Close it; a click or a keystroke reopens it as usual.
+        this._onModalOpened = (event) => {
+            if (this.element.closest(`#${CSS.escape(event.detail?.id ?? '')}`)) {
+                requestAnimationFrame(() => this._fp?.close());
+            }
+        };
+        window.addEventListener('modal:opened', this._onModalOpened);
     }
 
     disconnect() {
+        window.removeEventListener('modal:opened', this._onModalOpened);
         if (this._originalId) this.inputTarget.id = this._originalId;
         if (this._fp) this._fp.destroy();
     }
