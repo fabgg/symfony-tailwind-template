@@ -1,5 +1,6 @@
 {% set _content %}{% block content %}{% endblock %}{% endset %}
 
-<div class="px-6 py-4 border-t border-border flex justify-end gap-2">
+{# Sticky: the actions stay visible when a long form scrolls inside the modal. #}
+<div class="sticky bottom-0 z-10 bg-surface px-6 py-4 border-t border-border flex justify-end gap-2">
     {{ _content|raw }}
 </div>

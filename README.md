@@ -214,6 +214,7 @@ Reusable Twig components using `symfony/ux-twig-component`:
 | **ListToolbar** | `<twig:ListToolbar :activeFilters="[{param: 'status', label: 'Status: active'}]">…</twig:ListToolbar>` — GET form, state in the URL |
 | **SearchInput** | `<twig:SearchInput value="{{ q }}" />` — clear button, « / » shortcut, debounced submit |
 | **FilterChip** | `<twig:FilterChip label="Status: active" href="…" />` |
+| **CopyButton** | `<twig:CopyButton value="812345678" label="Copy the SIREN" message="SIREN copied." />` — copies and announces it (aria-live) |
 | **SegmentedControl** | `<twig:SegmentedControl label="View" :items="[{label: 'Current', href: '…', active: true, count: 3}]" />` — views as a track, state in the URL |
 | **Sidebar:NavSection** | `<twig:Sidebar:NavSection label="Contracts" />` — non-interactive heading between nav items |
 | **Toast:Region** | `<twig:Toast:Region />` in the layout — flash messages as toasts (errors stay until closed) |
@@ -244,6 +245,7 @@ $pagination->setCustomParameters(['page_sizes' => [25, 50, 100], 'item_label' =>
 - `{% block brand %}` in `layouts/app.html.twig`: logo and application name in the sidebar.
 - `Sidebar:NavItem`: `route` (active when the current route starts with `activePrefix`, default the route itself) or `href` for a plain URL; the active item gets `aria-current="page"`.
 - `Wizard`: `submitLabel` (label of the final button, e.g. « Save the lease »); `Wizard:Panel` `cancel` shows a Cancel button closing the enclosing modal at step 1; the current step label is highlighted.
+- `Modal:Footer` is sticky: actions stay visible when a long form scrolls inside the modal.
 - `Modal` dispatches `modal:opened` / `modal:closed` on `window` (`detail.id`), e.g. to restore a draft when a modal is reopened.
 
 ## Accessibility
