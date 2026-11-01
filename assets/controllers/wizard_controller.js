@@ -164,6 +164,11 @@ export default class extends Controller {
             const step = parseInt(indicator.closest('[data-step]').dataset.step);
             const stepEl = indicator.closest('[data-step]');
             if (step === this.currentStepValue) stepEl.setAttribute('aria-current', 'step'); else stepEl.removeAttribute('aria-current');
+            const label = stepEl.querySelector('[data-wizard-target="label"]');
+            if (label) {
+                label.classList.toggle('text-text-primary', step === this.currentStepValue);
+                label.classList.toggle('text-text-muted', step !== this.currentStepValue);
+            }
             indicator.classList.remove('border-primary-600', 'bg-primary-600', 'text-white', 'border-success-500', 'bg-success-500');
             if (step < this.currentStepValue) {
                 indicator.classList.add('border-success-500', 'bg-success-500', 'text-white');

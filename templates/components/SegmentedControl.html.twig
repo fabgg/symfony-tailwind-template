@@ -1,0 +1,20 @@
+{#
+    Segmented control: mutually exclusive views of the same content (e.g. « Current / All »), shown as a track.
+    Links variant — the state lives in the URL (shareable, Back button works):
+    <twig:SegmentedControl label="Leases shown" :items="[
+        {label: 'Current', href: path('x', {view: 'current'}), active: view == 'current', count: 3},
+        {label: 'All', href: path('x', {view: 'all'}), active: view == 'all'},
+    ]" />
+    Use it for views, not for actions (actions are Buttons). Not a primary-colored control: it must not compete
+    with the primary action of the page.
+#}
+{% props items, label %}
+
+<div {{ attributes.defaults({class: 'inline-flex rounded-lg bg-surface-alt p-0.5', role: 'group', 'aria-label': label}) }}>
+    {% for item in items %}
+        <a href="{{ item.href }}" {{ item.active ? 'aria-current="true"' }}
+           class="rounded-md px-3 py-1 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 {{ item.active ? 'bg-surface text-text-primary shadow-sm' : 'text-text-secondary hover:text-text-primary' }}">
+            {{ item.label }}{% if item.count is defined and item.count is not null %} <span class="tabular-nums text-text-muted">({{ item.count }})</span>{% endif %}
+        </a>
+    {% endfor %}
+</div>
