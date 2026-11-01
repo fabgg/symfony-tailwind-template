@@ -1,4 +1,4 @@
-{% props currentStep = 1, linear = true, variant = 'steps' %}
+{% props currentStep = 1, linear = true, variant = 'steps', submitLabel = null %}
 
 <div {{ attributes.defaults({
     'data-controller': 'wizard',
@@ -6,7 +6,7 @@
     'data-wizard-linear-value': linear ? 'true' : 'false',
     'data-wizard-variant-value': variant,
     'data-wizard-next-label-value': 'wizard.next'|trans,
-    'data-wizard-submit-label-value': 'wizard.finish'|trans,
+    'data-wizard-submit-label-value': submitLabel ?? ('wizard.finish'|trans),
     'data-wizard-step-label-value': 'wizard.step'|trans({current: '{current}', total: '{total}'}),
 }) }}>
     {% block content %}{% endblock %}

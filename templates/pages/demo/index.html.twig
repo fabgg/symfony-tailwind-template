@@ -11,7 +11,14 @@
 
 {% block content %}
 {# Search + filters: GET form, the whole state stays in the URL (shareable, Back button works). #}
-<twig:ListToolbar :activeFilters="category ? [{param: 'category', label: 'Category: ' ~ category}] : []">
+{# View filter: SegmentedControl (links, state in the URL) #}
+{% set _items = [{label: 'All', href: path('app_demo_index', app.request.query.all|filter((v, k) => k != 'status' and k != 'page')), active: status == ''}] %}
+{% for name, count in statusCounts %}
+    {% set _items = _items|merge([{label: name, href: path('app_demo_index', app.request.query.all|filter((v, k) => k != 'page')|merge({status: name})), active: status == name, count: count}]) %}
+{% endfor %}
+<twig:SegmentedControl label="Status" :items="_items" class="mb-3" />
+
+<twig:ListToolbar :activeFilters="category ? [{param: 'category', label: 'Category: ' ~ category}] : []" :keep="['sort', 'direction', 'limit', 'status']">
     <twig:SearchInput value="{{ search }}" placeholder="Search by name or category…" />
     <twig:block name="filters">
         <label for="filter-category" class="sr-only">Category</label>

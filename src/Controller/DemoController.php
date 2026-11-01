@@ -51,6 +51,14 @@ class DemoController extends AbstractController
             $items = array_values(array_filter($items, static fn (array $item): bool => $item['category'] === $category));
         }
 
+        $status = $request->query->getString('status');
+        $statusCounts = array_count_values(array_column($items, 'statusLabel'));
+        if (isset($statusCounts[$status])) {
+            $items = array_values(array_filter($items, static fn (array $item): bool => $item['statusLabel'] === $status));
+        } else {
+            $status = '';
+        }
+
         $search = trim($request->query->getString('q'));
         if ('' !== $search) {
             $items = array_values(array_filter(
@@ -87,6 +95,8 @@ class DemoController extends AbstractController
             'search' => $search,
             'categories' => $categories,
             'category' => $category,
+            'status' => $status,
+            'statusCounts' => $statusCounts,
         ]);
     }
 

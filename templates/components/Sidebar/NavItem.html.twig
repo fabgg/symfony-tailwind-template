@@ -1,12 +1,17 @@
-{% props route, icon = null, label %}
+{#
+    route: route name (active when the current route starts with `activePrefix`, default = route).
+    href: plain URL instead of a route (e.g. module not built yet).
+#}
+{% props route = null, href = null, icon = null, label, activePrefix = null %}
 
-{% set is_active = app.request.attributes.get('_route') starts with route %}
+{% set _current = app.request.attributes.get('_route') ?? '' %}
+{% set is_active = route and _current starts with (activePrefix ?? route) %}
 
-<a href="{{ path(route) }}"
-   {{ is_active ? 'data-active-item' : '' }}
-   class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ is_active ? 'bg-sidebar-active text-white' : 'text-gray-300 hover:bg-sidebar-hover hover:text-white' }}">
+<a href="{{ route ? path(route) : (href ?? '#') }}"
+   {{ is_active ? 'data-active-item aria-current="page"' : '' }}
+   class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 {{ is_active ? 'bg-sidebar-active text-white' : 'text-gray-300 hover:bg-sidebar-hover hover:text-white' }}">
     {% if icon %}
-        <span class="w-5 h-5 shrink-0 flex items-center justify-center">{{ icon|raw }}</span>
+        <span class="w-5 h-5 shrink-0 flex items-center justify-center" aria-hidden="true">{{ icon|raw }}</span>
     {% endif %}
     <span data-sidebar-label class="whitespace-nowrap overflow-hidden">{{ label }}</span>
 </a>

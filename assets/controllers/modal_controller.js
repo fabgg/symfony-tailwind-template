@@ -52,6 +52,7 @@ export default class extends Controller {
         this.element.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         this._focusFirst();
+        window.dispatchEvent(new CustomEvent('modal:opened', { detail: { id: this.element.id } }));
     }
 
     close() {
@@ -60,6 +61,7 @@ export default class extends Controller {
         this.element.classList.add('hidden');
         document.body.style.overflow = '';
         this._restoreFocus();
+        window.dispatchEvent(new CustomEvent('modal:closed', { detail: { id: this.element.id } }));
     }
 
     // Return focus to the trigger; if it is no longer visible (e.g. an item of a closed ActionMenu),

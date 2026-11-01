@@ -1,16 +1,26 @@
-{% props step %}
+{#
+    cancel: at step 1, show a « Cancel » button that closes the enclosing modal instead of an invisible « Previous ».
+#}
+{% props step, cancel = false %}
 
 <div data-wizard-target="panel" data-step="{{ step }}" class="hidden">
     <div class="mb-6">
         {% block content %}{% endblock %}
     </div>
     <div class="flex justify-between">
+        {% if cancel and step == 1 %}
+        <button type="button" data-action="modal#close"
+                class="px-4 py-2 text-sm font-medium rounded-lg border border-border text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 transition-colors">
+            {{ 'confirm.cancel'|trans }}
+        </button>
+        {% else %}
         <button type="button" data-action="wizard#prev" data-wizard-target="prevButton"
                 class="px-4 py-2 text-sm font-medium rounded-lg border border-border text-text-secondary hover:bg-surface-hover transition-colors">
             {{ 'wizard.previous'|trans }}
         </button>
+        {% endif %}
         <button type="button" data-action="wizard#next" data-wizard-target="nextButton"
-                class="px-4 py-2 text-sm font-medium rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-colors">
+                class="px-4 py-2 text-sm font-medium rounded-lg bg-primary-600 text-white hover:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-primary-600 transition-colors">
             {{ 'wizard.next'|trans }}
         </button>
     </div>
