@@ -227,7 +227,9 @@
     {% set _input_normal = 'border-border' %}
     <div class="relative" data-controller="datepicker"
         data-datepicker-format-value="{{ format|default('Y-m-d') }}"
-        data-datepicker-enable-time-value="{{ enable_time is defined and enable_time ? 'true' : 'false' }}">
+        data-datepicker-enable-time-value="{{ enable_time is defined and enable_time ? 'true' : 'false' }}"
+        {% if display_format is defined and display_format %}data-datepicker-alt-format-value="{{ display_format }}"{% endif %}
+        {% if locale is defined and locale %}data-datepicker-locale-value="{{ locale }}"{% endif %}>
         <input type="text" {{ block('widget_attributes') }}
             value="{{ value }}"
             data-datepicker-target="input"

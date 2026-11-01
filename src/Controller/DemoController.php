@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\DemoType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,20 +30,51 @@ class DemoController extends AbstractController
         ];
     }
 
+    private const PAGE_SIZES = [5, 10, 25];
+
+    /**
+     * Server-side listing with KnpPaginator: only the current page is rendered.
+     * With Doctrine, pass a QueryBuilder instead of an array: Knp adds LIMIT/OFFSET, COUNT and ORDER BY.
+     */
     #[Route('', name: 'app_demo_index')]
-    public function index(Request $request): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $items = $this->getDemoItems();
-        $page = max(1, $request->query->getInt('page', 1));
-        $perPage = 5;
-        $totalPages = (int) ceil(count($items) / $perPage);
-        $page = min($page, $totalPages);
-        $pagedItems = array_slice($items, ($page - 1) * $perPage, $perPage);
+
+        $search = trim($request->query->getString('q'));
+        if ('' !== $search) {
+            $items = array_values(array_filter(
+                $items,
+                static fn (array $item): bool => false !== mb_stripos($item['name'].' '.$item['category'], $search),
+            ));
+        }
+
+        $limit = $request->query->getInt('limit', self::PAGE_SIZES[0]);
+        if (!\in_array($limit, self::PAGE_SIZES, true)) {
+            $limit = self::PAGE_SIZES[0];
+        }
+
+        // Never sort on an arbitrary query parameter: allow-list the sortable fields.
+        // An unknown field (hand-edited or outdated URL) falls back to the default sort instead of a 500 error.
+        $sortable = ['[name]', '[category]', '[date]'];
+        if (!\in_array($request->query->get('sort', $sortable[0]), $sortable, true)) {
+            $request->query->remove('sort');
+            $request->query->remove('direction');
+        }
+
+        $pagination = $paginator->paginate($items, $request->query->getInt('page', 1), $limit, [
+            PaginatorInterface::SORT_FIELD_ALLOW_LIST => $sortable,
+            PaginatorInterface::DEFAULT_SORT_FIELD_NAME => '[name]',
+            PaginatorInterface::DEFAULT_SORT_DIRECTION => 'asc',
+        ]);
+        $pagination->setCustomParameters([
+            'page_sizes' => self::PAGE_SIZES,
+            'item_label' => 'demo.items',
+        ]);
 
         return $this->render('pages/demo/index.html.twig', [
-            'items' => $pagedItems,
-            'currentPage' => $page,
-            'totalPages' => $totalPages,
+            'pagination' => $pagination,
+            'search' => $search,
         ]);
     }
 

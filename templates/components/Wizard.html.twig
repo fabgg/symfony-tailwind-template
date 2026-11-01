@@ -5,6 +5,9 @@
     'data-wizard-current-step-value': currentStep,
     'data-wizard-linear-value': linear ? 'true' : 'false',
     'data-wizard-variant-value': variant,
+    'data-wizard-next-label-value': 'wizard.next'|trans,
+    'data-wizard-submit-label-value': 'wizard.finish'|trans,
+    'data-wizard-step-label-value': 'wizard.step'|trans({current: '{current}', total: '{total}'}),
 }) }}>
     {% block content %}{% endblock %}
 </div>

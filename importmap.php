@@ -52,4 +52,7 @@ return [
         'version' => '2.1.16',
         'type' => 'css',
     ],
+    'flatpickr/dist/l10n/fr.js' => [
+        'version' => '4.6.13',
+    ],
 ];

@@ -4,7 +4,7 @@ A ready-to-use Symfony 7.4 starter kit with Tailwind CSS, Stimulus, Turbo, and a
 
 ## Requirements
 
-- PHP 8.2+
+- PHP 8.4+
 - [Composer](https://getcomposer.org/)
 - [Symfony CLI](https://symfony.com/download) (recommended)
 - [Docker](https://www.docker.com/) (for PostgreSQL)
@@ -202,10 +202,36 @@ Reusable Twig components using `symfony/ux-twig-component`:
 | **Modal** | `<twig:Modal id="my-modal" title="Title">...</twig:Modal>` |
 | **Pagination** | `<twig:Pagination currentPage="1" totalPages="10" route="..." />` |
 | **Table** | `<twig:Table hoverable striped>...</twig:Table>` |
+| **Table:SortableHeader** | `<twig:Table:SortableHeader :pagination="pagination" label="Name" field="e.name" />` (KnpPaginator, sets `aria-sort`) |
 | **Tabs** | `<twig:Tabs defaultTab="tab1">...</twig:Tabs>` |
 | **Text** | `<twig:Text variant="secondary" size="sm">...</twig:Text>` |
 | **Accordion** | `<twig:Accordion>...</twig:Accordion>` |
 | **Wizard** | `<twig:Wizard>...</twig:Wizard>` |
+
+## Paginated lists (KnpPaginator)
+
+Lists are paginated, sorted and filtered **server-side** with [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle): only the current page is queried and rendered (`LIMIT`/`OFFSET` + `COUNT` on a Doctrine `QueryBuilder`). See `DemoController::index()` and `templates/pages/demo/index.html.twig`.
+
+```php
+$pagination = $paginator->paginate($queryBuilder, $request->query->getInt('page', 1), $limit, [
+    PaginatorInterface::SORT_FIELD_ALLOW_LIST => ['e.name', 'e.createdAt'], // never sort on arbitrary input
+    PaginatorInterface::DEFAULT_SORT_FIELD_NAME => 'e.name',
+]);
+$pagination->setCustomParameters(['page_sizes' => [25, 50, 100], 'item_label' => 'my.items']);
+```
+
+```twig
+<twig:Table:SortableHeader :pagination="pagination" label="Name" field="e.name" />
+{{ knp_pagination_render(pagination) }}
+```
+
+- Tailwind templates: `templates/knp_paginator/pagination.html.twig` (summary « 1–25 of 454 », page size selector, accessible navigation) and `sortable_link.html.twig`; configured in `config/packages/knp_paginator.yaml`.
+- The whole state (search, filters, sort, page, page size) lives in the URL: shareable links, Back button works.
+- `autosubmit` Stimulus controller: submits filter forms on change (debounced for text inputs).
+
+## Translations
+
+UI strings of the components (pagination, sorting, wizard) are translated (`translations/messages+intl-icu.{en,fr}.yaml`). Set `framework.default_locale` to switch language. `DatePickerType` displays dates in the user's locale format (`d/m/Y` in French) while submitting ISO dates; flatpickr locales are registered in `assets/controllers/datepicker_controller.js`.
 
 ## Custom Form Types
 

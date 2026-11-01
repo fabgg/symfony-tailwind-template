@@ -1,0 +1,96 @@
+{#
+    KnpPaginator — Tailwind sliding pagination.
+    Rendered by knp_pagination_render(pagination). Optional custom parameters
+    (set with pagination.setCustomParameters([...]) or passed as 3rd argument of knp_pagination_render):
+      - page_sizes:       list of allowed page sizes, e.g. [25, 50, 100] (shows the page size selector)
+      - limit_name:       query parameter for the page size (default "limit")
+      - item_label:       translated plural label of the items, e.g. "sites" (default "results")
+#}
+{% set _limit_name = limit_name ?? 'limit' %}
+{% set _sizes = page_sizes ?? [] %}
+{% set _link = 'inline-flex items-center justify-center min-w-9 h-9 px-3 text-sm rounded-lg border border-border text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 transition-colors' %}
+
+{% if totalCount > 0 %}
+<div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-sm text-text-secondary tabular-nums" aria-live="polite">
+        {{ 'pagination.summary'|trans({
+            '%first%': firstItemNumber|format_number,
+            '%last%': lastItemNumber|format_number,
+            '%total%': totalCount|format_number,
+            '%items%': (item_label ?? 'pagination.items')|trans,
+        }) }}
+    </p>
+
+    <div class="flex flex-wrap items-center gap-4">
+        {% if _sizes is not empty %}
+            <form method="get" action="{{ path(route) }}" class="flex items-center gap-2" data-controller="autosubmit">
+                {% for name, value in query|filter((v, k) => k not in [_limit_name, pageParameterName] and v is not iterable) %}
+                    <input type="hidden" name="{{ name }}" value="{{ value }}">
+                {% endfor %}
+                <label for="pagination-limit" class="text-sm text-text-secondary">{{ 'pagination.per_page'|trans }}</label>
+                <select id="pagination-limit" name="{{ _limit_name }}" data-action="autosubmit#submit"
+                        class="h-9 rounded-lg border border-border bg-surface px-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+                    {% for size in _sizes %}
+                        <option value="{{ size }}" {{ size == numItemsPerPage ? 'selected' }}>{{ size }}</option>
+                    {% endfor %}
+                </select>
+                <noscript><button type="submit" class="{{ _link }}">{{ 'pagination.apply'|trans }}</button></noscript>
+            </form>
+        {% endif %}
+
+        {% if pageCount > 1 %}
+            <nav aria-label="{{ 'pagination.label'|trans }}">
+                <ul class="flex items-center gap-1">
+                    <li>
+                        {% if previous is defined %}
+                            <a rel="prev" href="{{ path(route, knp_pagination_query(query, previous, options)) }}" class="{{ _link }}"
+                               aria-label="{{ 'pagination.previous'|trans }}">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+                            </a>
+                        {% else %}
+                            <span class="{{ _link }} opacity-40 cursor-not-allowed" aria-disabled="true">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+                                <span class="sr-only">{{ 'pagination.previous'|trans }}</span>
+                            </span>
+                        {% endif %}
+                    </li>
+
+                    {% if startPage > 1 %}
+                        <li><a href="{{ path(route, knp_pagination_query(query, 1, options)) }}" class="{{ _link }} tabular-nums">1</a></li>
+                        {% if startPage > 2 %}<li><span class="px-1 text-text-muted" aria-hidden="true">…</span></li>{% endif %}
+                    {% endif %}
+
+                    {% for page in pagesInRange %}
+                        <li>
+                            {% if page == current %}
+                                <span aria-current="page" class="inline-flex items-center justify-center min-w-9 h-9 px-3 text-sm rounded-lg bg-primary-600 text-white font-medium tabular-nums">{{ page }}</span>
+                            {% else %}
+                                <a href="{{ path(route, knp_pagination_query(query, page, options)) }}" class="{{ _link }} tabular-nums">{{ page }}</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+
+                    {% if pageCount > endPage %}
+                        {% if pageCount > endPage + 1 %}<li><span class="px-1 text-text-muted" aria-hidden="true">…</span></li>{% endif %}
+                        <li><a href="{{ path(route, knp_pagination_query(query, pageCount, options)) }}" class="{{ _link }} tabular-nums">{{ pageCount }}</a></li>
+                    {% endif %}
+
+                    <li>
+                        {% if next is defined %}
+                            <a rel="next" href="{{ path(route, knp_pagination_query(query, next, options)) }}" class="{{ _link }}"
+                               aria-label="{{ 'pagination.next'|trans }}">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                            </a>
+                        {% else %}
+                            <span class="{{ _link }} opacity-40 cursor-not-allowed" aria-disabled="true">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                                <span class="sr-only">{{ 'pagination.next'|trans }}</span>
+                            </span>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+</div>
+{% endif %}

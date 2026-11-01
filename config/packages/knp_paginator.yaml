@@ -1,0 +1,12 @@
+knp_paginator:
+    page_range: 5                       # number of page links shown around the current page
+    default_options:
+        page_name: page                 # query parameter for the page number
+        sort_field_name: sort           # query parameter for the sort field
+        sort_direction_name: direction  # query parameter for the sort direction
+        distinct: true                  # required when the query has joins
+        page_out_of_range: fix          # ?page=999 shows the last page instead of an empty list
+        default_limit: 25
+    template:
+        pagination: 'knp_paginator/pagination.html.twig'
+        sortable: 'knp_paginator/sortable_link.html.twig'

@@ -1,0 +1,18 @@
+pagination:
+    label: Pagination
+    previous: Previous page
+    next: Next page
+    per_page: Per page
+    apply: Apply
+    items: results
+    summary: '{first}–{last} of {total} {items}'
+table:
+    sort_asc: 'Sort by {column}, ascending'
+    sort_desc: 'Sort by {column}, descending'
+wizard:
+    previous: Previous
+    next: Next
+    finish: Finish
+    step: 'Step {current} of {total}'
+demo:
+    items: items
