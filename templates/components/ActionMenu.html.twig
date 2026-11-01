@@ -1,0 +1,31 @@
+{#
+    Overflow menu (⋯) for secondary actions of a record or a table row (WAI-ARIA menu button pattern).
+    Keyboard: Enter/Space/↓ opens and focuses the first item, ↑/↓/Home/End move, Escape closes and
+    returns focus to the button, Tab closes.
+
+    <twig:ActionMenu label="Actions for AGEN">
+        <twig:ActionMenu:Item href="{{ path('site_export', {id: 1}) }}">Export</twig:ActionMenu:Item>
+        <twig:ActionMenu:Divider />
+        <twig:ActionMenu:Item variant="danger" data-modal-trigger="delete-site">Delete…</twig:ActionMenu:Item>
+    </twig:ActionMenu>
+
+    `label`: accessible name of the button (default « More actions »). `align`: right (default) | left.
+#}
+{% props label = null, align = 'right' %}
+{% set _id = 'menu-' ~ random() %}
+
+<div {{ attributes.defaults({class: 'relative inline-block text-left', 'data-controller': 'menu'}) }}>
+    <button type="button" id="{{ _id }}-button"
+            data-menu-target="button" data-action="menu#toggle keydown->menu#buttonKeydown"
+            aria-haspopup="menu" aria-expanded="false" aria-controls="{{ _id }}"
+            aria-label="{{ label ?? ('menu.more_actions'|trans) }}"
+            class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-text-secondary hover:bg-surface-hover hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 transition-colors">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+    </button>
+
+    <div id="{{ _id }}" role="menu" aria-labelledby="{{ _id }}-button" tabindex="-1"
+         data-menu-target="menu" data-action="keydown->menu#menuKeydown"
+         class="hidden absolute {{ align == 'left' ? 'left-0' : 'right-0' }} z-40 mt-1 min-w-48 rounded-lg border border-border bg-surface py-1 shadow-lg">
+        {% block content %}{% endblock %}
+    </div>
+</div>

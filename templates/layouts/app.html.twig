@@ -69,14 +69,8 @@
         </div>
         {% endif %}
 
-        {# Flash messages #}
-        {% for type, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="px-6 pt-4">
-                    <twig:Alert type="{{ type }}" dismissible>{{ message }}</twig:Alert>
-                </div>
-            {% endfor %}
-        {% endfor %}
+        {# Flash messages are rendered as toasts (aria-live region) #}
+        <twig:Toast:Region />
 
         {# Main content #}
         <main class="flex-1 p-6">

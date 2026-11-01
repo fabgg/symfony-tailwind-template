@@ -1,0 +1,14 @@
+{#
+    Item of an ActionMenu: a link (href) or a button (e.g. data-modal-trigger="…" to open a ConfirmDialog).
+    variant: default | danger. Destructive actions must open a confirmation, never act directly.
+#}
+{% props href = null, variant = 'default' %}
+{% set _classes = 'flex w-full items-center gap-2 px-4 py-2 text-left text-sm focus-visible:outline-none focus:bg-surface-hover hover:bg-surface-hover '
+    ~ (variant == 'danger' ? 'text-danger-600' : 'text-text-primary') %}
+{% set _content %}{% block content %}{% endblock %}{% endset %}
+
+{% if href %}
+    <a href="{{ href }}" role="menuitem" tabindex="-1" data-menu-target="item" {{ attributes.defaults({class: _classes}) }}>{{ _content|raw }}</a>
+{% else %}
+    <button type="button" role="menuitem" tabindex="-1" data-menu-target="item" data-action="menu#close" {{ attributes.defaults({class: _classes}) }}>{{ _content|raw }}</button>
+{% endif %}

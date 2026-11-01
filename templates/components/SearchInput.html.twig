@@ -1,0 +1,28 @@
+{#
+    Search field of a list: magnifier icon, clear button, keyboard shortcut « / » to focus it.
+    Inside a <form data-controller="autosubmit"> (e.g. ListToolbar) it submits after typing stops.
+    <twig:SearchInput name="q" value="{{ search }}" placeholder="Name, city, SIREN…" />
+#}
+{% props name = 'q', value = '', placeholder = null, label = null, shortcut = '/' %}
+{% set _id = attributes.render('id') ?: name ~ '-search' %}
+
+<div class="relative w-full max-w-md" data-controller="search" data-search-shortcut-value="{{ shortcut }}">
+    <label for="{{ _id }}" class="sr-only">{{ label ?? ('search.label'|trans) }}</label>
+    <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    <input type="search" id="{{ _id }}" name="{{ name }}" value="{{ value }}"
+           placeholder="{{ placeholder ?? ('search.placeholder'|trans) }}"
+           autocomplete="off" spellcheck="false" enterkeyhint="search"
+           data-search-target="input" data-action="input->autosubmit#debouncedSubmit input->search#toggleClear"
+           {% if shortcut %}aria-keyshortcuts="{{ shortcut }}"{% endif %}
+           class="w-full rounded-lg border border-border bg-surface py-2 pl-9 pr-16 text-sm text-text-primary placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 [&::-webkit-search-cancel-button]:hidden">
+    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-1">
+        <button type="button" data-search-target="clear" data-action="search#clear"
+                class="{{ value ? '' : 'hidden' }} rounded p-1 text-text-muted hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                aria-label="{{ 'search.clear'|trans }}">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        {% if shortcut %}
+            <kbd class="hidden rounded border border-border px-1.5 text-xs text-text-muted sm:inline" aria-hidden="true">{{ shortcut }}</kbd>
+        {% endif %}
+    </div>
+</div>

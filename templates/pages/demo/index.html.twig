@@ -10,18 +10,28 @@
 {% endblock %}
 
 {% block content %}
-{# Search: GET form, state kept in the URL (shareable, Back button works). Sort and page size are preserved. #}
-<form method="get" action="{{ path('app_demo_index') }}" class="mb-4 flex items-center gap-2" role="search" data-controller="autosubmit">
-    {% for name in ['sort', 'direction', 'limit'] %}
-        {% if app.request.query.has(name) %}<input type="hidden" name="{{ name }}" value="{{ app.request.query.get(name) }}">{% endif %}
-    {% endfor %}
-    <label for="demo-search" class="sr-only">Search</label>
-    <input id="demo-search" type="search" name="q" value="{{ search }}" placeholder="Search by name or category…"
-           autocomplete="off" data-action="input->autosubmit#debouncedSubmit"
-           class="w-full max-w-sm rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
-</form>
+{# Search + filters: GET form, the whole state stays in the URL (shareable, Back button works). #}
+<twig:ListToolbar :activeFilters="category ? [{param: 'category', label: 'Category: ' ~ category}] : []">
+    <twig:SearchInput value="{{ search }}" placeholder="Search by name or category…" />
+    <twig:block name="filters">
+        <label for="filter-category" class="sr-only">Category</label>
+        <select id="filter-category" name="category" data-action="autosubmit#submit"
+                class="h-9 rounded-lg border border-border bg-surface px-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+            <option value="">All categories</option>
+            {% for c in categories %}
+                <option value="{{ c }}" {{ c == category ? 'selected' }}>{{ c }}</option>
+            {% endfor %}
+        </select>
+    </twig:block>
+</twig:ListToolbar>
 
-<twig:Card>
+<twig:Card :padding="false">
+    {% if pagination.totalItemCount == 0 %}
+        <twig:EmptyState title="No item matches your search" icon="search"
+                         description="Check the spelling or remove a filter.">
+            <twig:Button variant="secondary" size="sm" href="{{ path('app_demo_index') }}">Clear search and filters</twig:Button>
+        </twig:EmptyState>
+    {% else %}
     <twig:Table>
         <thead>
             <tr>
@@ -30,8 +40,7 @@
                 <th scope="col" class="px-4 py-3 text-left text-xs uppercase tracking-wide text-text-secondary">Status</th>
                 <th scope="col" class="px-4 py-3 text-left text-xs uppercase tracking-wide text-text-secondary">Priority</th>
                 <twig:Table:SortableHeader :pagination="pagination" label="Date" field="[date]" />
-                <th scope="col" class="px-4 py-3 text-left text-xs uppercase tracking-wide text-text-secondary">Color</th>
-                <th scope="col" class="px-4 py-3 text-right text-xs uppercase tracking-wide text-text-secondary">Actions</th>
+                <th scope="col" class="px-4 py-3 text-right text-xs uppercase tracking-wide text-text-secondary"><span class="sr-only">Actions</span></th>
             </tr>
         </thead>
         <tbody class="divide-y divide-border">
@@ -44,26 +53,17 @@
                 <td class="px-4 py-3"><twig:Badge variant="{{ item.status }}">{{ item.statusLabel }}</twig:Badge></td>
                 <td class="px-4 py-3 text-sm text-text-secondary">{{ item.priority }}</td>
                 <td class="px-4 py-3 text-sm text-text-secondary tabular-nums">{{ item.date|format_date('medium') }}</td>
-                <td class="px-4 py-3">
-                    <span class="inline-block w-5 h-5 rounded border border-border" style="background-color: {{ item.color }}" aria-hidden="true"></span>
-                    <span class="sr-only">{{ item.color }}</span>
-                </td>
-                <td class="px-4 py-3 text-right">
-                    <div class="flex items-center justify-end gap-1">
-                        <twig:Button variant="ghost" size="xs" href="{{ path('app_demo_show', {id: item.id}) }}">View</twig:Button>
-                        <twig:Button variant="ghost" size="xs" href="{{ path('app_demo_edit', {id: item.id}) }}">Edit</twig:Button>
-                    </div>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="7" class="px-4 py-10 text-center text-sm text-text-secondary">
-                    No item matches “{{ search }}”. <a href="{{ path('app_demo_index') }}" class="text-primary-600 hover:underline">Clear the search</a>
+                <td class="px-4 py-2 text-right">
+                    <twig:ActionMenu label="Actions for {{ item.name }}">
+                        <twig:ActionMenu:Item href="{{ path('app_demo_show', {id: item.id}) }}">View</twig:ActionMenu:Item>
+                        <twig:ActionMenu:Item href="{{ path('app_demo_edit', {id: item.id}) }}">Edit</twig:ActionMenu:Item>
+                    </twig:ActionMenu>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </twig:Table>
+    {% endif %}
 </twig:Card>
 
 {{ knp_pagination_render(pagination) }}

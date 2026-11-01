@@ -41,6 +41,16 @@ class DemoController extends AbstractController
     {
         $items = $this->getDemoItems();
 
+        $categories = array_values(array_unique(array_column($items, 'category')));
+        sort($categories);
+        $category = $request->query->getString('category');
+        if (!\in_array($category, $categories, true)) {
+            $category = '';
+        }
+        if ('' !== $category) {
+            $items = array_values(array_filter($items, static fn (array $item): bool => $item['category'] === $category));
+        }
+
         $search = trim($request->query->getString('q'));
         if ('' !== $search) {
             $items = array_values(array_filter(
@@ -75,6 +85,8 @@ class DemoController extends AbstractController
         return $this->render('pages/demo/index.html.twig', [
             'pagination' => $pagination,
             'search' => $search,
+            'categories' => $categories,
+            'category' => $category,
         ]);
     }
 
@@ -159,5 +171,22 @@ class DemoController extends AbstractController
             'form' => $form,
             'item' => $item,
         ]);
+    }
+
+    /**
+     * Destructive action: POST only, CSRF token checked (see ConfirmDialog component).
+     */
+    #[Route('/{id}/delete', name: 'app_demo_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function delete(int $id, Request $request): Response
+    {
+        if (!$this->isCsrfTokenValid('delete-item-'.$id, $request->getPayload()->getString('_token'))) {
+            $this->addFlash('error', 'The link has expired, please try again.');
+
+            return $this->redirectToRoute('app_demo_show', ['id' => $id]);
+        }
+
+        $this->addFlash('success', 'Item deleted (demo — nothing is persisted).');
+
+        return $this->redirectToRoute('app_demo_index', [], Response::HTTP_SEE_OTHER);
     }
 }

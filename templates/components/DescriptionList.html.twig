@@ -1,0 +1,14 @@
+{#
+    Label / value pairs of a record (<dl>).
+    <twig:DescriptionList columns="2">
+        <twig:DescriptionList:Item label="SIREN" value="912 909 223" />
+        <twig:DescriptionList:Item label="Status"><twig:Badge variant="success">Active</twig:Badge></twig:DescriptionList:Item>
+    </twig:DescriptionList>
+    `columns`: 1 | 2 (default) | 3 | 4 — stacked on small screens. `dense`: tighter spacing for data-heavy screens.
+#}
+{% props columns = 2, dense = false %}
+{% set _cols = {1: '', 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-2 lg:grid-cols-3', 4: 'sm:grid-cols-2 lg:grid-cols-4'} %}
+
+<dl {{ attributes.defaults({class: 'grid grid-cols-1 ' ~ (_cols[columns] ?? _cols[2]) ~ ' ' ~ (dense ? 'gap-x-6 gap-y-2' : 'gap-x-6 gap-y-4')}) }}>
+    {% block content %}{% endblock %}
+</dl>

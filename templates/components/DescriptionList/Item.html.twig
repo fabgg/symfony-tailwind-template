@@ -1,0 +1,15 @@
+{#
+    One label / value pair. Value from the `value` prop or the content block; empty → « — » (not a blank).
+    `numeric`: right-aligned tabular figures (amounts, counts). `span`: number of columns to span (long text).
+#}
+{% props label, value = null, numeric = false, span = 1 %}
+{% set _content %}{% block content %}{% endblock %}{% endset %}
+{% set _value = _content|trim is not empty ? _content : (value is not null and value is not same as('') ? value|e : null) %}
+{% set _span = {1: '', 2: 'sm:col-span-2', 3: 'sm:col-span-2 lg:col-span-3', 4: 'sm:col-span-2 lg:col-span-4'} %}
+
+<div {{ attributes.defaults({class: 'min-w-0 ' ~ (_span[span] ?? '')}) }}>
+    <dt class="text-sm font-medium text-text-muted">{{ label }}</dt>
+    <dd class="mt-1 text-sm text-text-primary break-words {{ numeric ? 'tabular-nums' : '' }}">
+        {% if _value is not null %}{{ _value|raw }}{% else %}<span class="text-text-muted" aria-label="{{ 'value.empty'|trans }}">—</span>{% endif %}
+    </dd>
+</div>
