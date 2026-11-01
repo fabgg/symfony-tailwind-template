@@ -1,0 +1,13 @@
+{#
+    Sortable column header for KnpPaginator lists.
+    <twig:Table:SortableHeader :pagination="pagination" label="Name" field="s.name" />
+    Sets aria-sort on the <th> (WCAG) and renders knp_pagination_sortable inside.
+    `align`: left (default) | right (numbers, amounts).
+#}
+{% props pagination, label, field, align = 'left' %}
+{% set _sorted = pagination.isSorted(field) %}
+<th scope="col"
+    {{ attributes.defaults({class: 'px-4 py-3 text-xs uppercase tracking-wide text-text-secondary ' ~ (align == 'right' ? 'text-right' : 'text-left')}) }}
+    aria-sort="{{ _sorted ? (pagination.direction == 'desc' ? 'descending' : 'ascending') : 'none' }}">
+    {{ knp_pagination_sortable(pagination, label, field) }}
+</th>

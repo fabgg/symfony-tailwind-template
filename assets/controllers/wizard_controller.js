@@ -7,6 +7,10 @@ export default class extends Controller {
         totalSteps: Number,
         linear: { type: Boolean, default: true },
         variant: { type: String, default: 'steps' },
+        // Labels are passed by the Twig component (translated); English defaults.
+        nextLabel: { type: String, default: 'Next' },
+        submitLabel: { type: String, default: 'Submit' },
+        stepLabel: { type: String, default: 'Step {current} of {total}' },
     };
 
     connect() {
@@ -72,7 +76,7 @@ export default class extends Controller {
         const labels = [];
         for (let i = 1; i <= totalPanels; i++) {
             const stepEl = steps.find ? steps.find(s => parseInt(s.dataset.step) === i) : null;
-            const label = stepEl ? stepEl.querySelector('[data-wizard-target="label"]')?.textContent || `Step ${i}` : `Step ${i}`;
+            const label = stepEl ? stepEl.querySelector('[data-wizard-target="label"]')?.textContent || this._stepText(i) : this._stepText(i);
             labels.push(label);
         }
 
@@ -142,22 +146,28 @@ export default class extends Controller {
 
         this.nextButtonTargets.forEach(btn => {
             if (this.currentStepValue === this.totalStepsValue) {
-                btn.textContent = 'Submit';
+                btn.textContent = this.submitLabelValue;
                 btn.setAttribute('type', 'submit');
             } else {
-                btn.textContent = 'Next';
+                btn.textContent = this.nextLabelValue;
                 btn.setAttribute('type', 'button');
             }
         });
     }
 
+    _stepText(current) {
+        return this.stepLabelValue.replace('{current}', current).replace('{total}', this.totalStepsValue);
+    }
+
     _applySteps() {
         this.indicatorTargets.forEach(indicator => {
             const step = parseInt(indicator.closest('[data-step]').dataset.step);
+            const stepEl = indicator.closest('[data-step]');
+            if (step === this.currentStepValue) stepEl.setAttribute('aria-current', 'step'); else stepEl.removeAttribute('aria-current');
             indicator.classList.remove('border-primary-600', 'bg-primary-600', 'text-white', 'border-success-500', 'bg-success-500');
             if (step < this.currentStepValue) {
                 indicator.classList.add('border-success-500', 'bg-success-500', 'text-white');
-                indicator.innerHTML = '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>';
+                indicator.innerHTML = '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>';
             } else if (step === this.currentStepValue) {
                 indicator.classList.add('border-primary-600', 'bg-primary-600', 'text-white');
                 indicator.textContent = step;
@@ -184,7 +194,7 @@ export default class extends Controller {
 
         // Header text
         if (this.hasProgressTextTarget) {
-            this.progressTextTarget.textContent = `Step ${this.currentStepValue} of ${this.totalStepsValue}`;
+            this.progressTextTarget.textContent = this._stepText(this.currentStepValue);
         }
 
         // Percentage badge

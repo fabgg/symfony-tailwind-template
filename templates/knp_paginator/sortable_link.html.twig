@@ -1,0 +1,18 @@
+{#
+    KnpPaginator — sortable column link (rendered by knp_pagination_sortable).
+    `direction` is the direction the link WILL apply; `sorted` tells whether this column is the active sort.
+    Use it inside <twig:Table:SortableHeader>, which sets aria-sort on the <th>.
+#}
+{% set _current = sorted ? (direction == 'asc' ? 'desc' : 'asc') : null %}
+<a href="{{ options.href }}"
+   class="group inline-flex items-center gap-1 rounded font-medium hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 {{ sorted ? 'text-text-primary' : '' }}"
+   title="{{ (direction == 'asc' ? 'table.sort_asc' : 'table.sort_desc')|trans({'%column%': title}) }}">
+    <span>{{ title }}</span>
+    <span class="{{ sorted ? '' : 'opacity-0 group-hover:opacity-50 group-focus-visible:opacity-50' }}" aria-hidden="true">
+        {% if _current == 'desc' %}
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        {% else %}
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 15l7-7 7 7"/></svg>
+        {% endif %}
+    </span>
+</a>

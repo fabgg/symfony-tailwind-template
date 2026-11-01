@@ -1,35 +1,38 @@
+{#
+    Simple pagination for hand-paginated data. For Doctrine/array lists prefer KnpPaginator:
+    {{ knp_pagination_render(pagination) }} (see templates/knp_paginator/).
+#}
 {% props currentPage, totalPages, route, routeParams = {} %}
+{% set _link = 'inline-flex items-center justify-center min-w-9 h-9 px-3 text-sm rounded-lg border border-border text-text-secondary hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 transition-colors tabular-nums' %}
 
 {% if totalPages > 1 %}
-<nav class="flex items-center justify-center gap-1 mt-6">
-    {# Previous #}
-    {% if currentPage > 1 %}
-        <a href="{{ path(route, routeParams|merge({page: currentPage - 1})) }}"
-           class="px-3 py-2 text-sm rounded-lg border border-border hover:bg-surface-hover transition-colors text-text-secondary">
-            &laquo; Prev.
-        </a>
-    {% endif %}
-
-    {# Pages #}
-    {% for page in 1..totalPages %}
-        {% if page == currentPage %}
-            <span class="px-3 py-2 text-sm rounded-lg bg-primary-600 text-white font-medium">{{ page }}</span>
-        {% elseif (page - currentPage)|abs <= 2 or page == 1 or page == totalPages %}
-            <a href="{{ path(route, routeParams|merge({page: page})) }}"
-               class="px-3 py-2 text-sm rounded-lg border border-border hover:bg-surface-hover transition-colors text-text-secondary">
-                {{ page }}
-            </a>
-        {% elseif (page - currentPage)|abs == 3 %}
-            <span class="px-2 py-2 text-text-muted">&hellip;</span>
+<nav class="mt-6 flex justify-center" aria-label="{{ 'pagination.label'|trans }}">
+    <ul class="flex items-center gap-1">
+        {% if currentPage > 1 %}
+            <li>
+                <a rel="prev" href="{{ path(route, routeParams|merge({page: currentPage - 1})) }}" class="{{ _link }}" aria-label="{{ 'pagination.previous'|trans }}">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+                </a>
+            </li>
         {% endif %}
-    {% endfor %}
 
-    {# Next #}
-    {% if currentPage < totalPages %}
-        <a href="{{ path(route, routeParams|merge({page: currentPage + 1})) }}"
-           class="px-3 py-2 text-sm rounded-lg border border-border hover:bg-surface-hover transition-colors text-text-secondary">
-            Next &raquo;
-        </a>
-    {% endif %}
+        {% for page in 1..totalPages %}
+            {% if page == currentPage %}
+                <li><span aria-current="page" class="inline-flex items-center justify-center min-w-9 h-9 px-3 text-sm rounded-lg bg-primary-600 text-white font-medium tabular-nums">{{ page }}</span></li>
+            {% elseif (page - currentPage)|abs <= 2 or page == 1 or page == totalPages %}
+                <li><a href="{{ path(route, routeParams|merge({page: page})) }}" class="{{ _link }}">{{ page }}</a></li>
+            {% elseif (page - currentPage)|abs == 3 %}
+                <li><span class="px-1 text-text-muted" aria-hidden="true">…</span></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if currentPage < totalPages %}
+            <li>
+                <a rel="next" href="{{ path(route, routeParams|merge({page: currentPage + 1})) }}" class="{{ _link }}" aria-label="{{ 'pagination.next'|trans }}">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
 </nav>
 {% endif %}
